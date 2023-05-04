@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.devcode.storyapp.MainActivity
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ActivitySplashBinding
+import com.devcode.storyapp.ui.login.LoginActivity
 
 
 @SuppressLint("CustomSplashScreen")
@@ -35,12 +36,11 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupView()
         getVersionApp()
         customSpanTitleLogo()
         playAnimation()
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
@@ -83,18 +83,6 @@ class SplashActivity : AppCompatActivity() {
                 duration = 500
             }.start()
         }, delayAnimation)
-    }
-
-    private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
     }
 
     companion object{
