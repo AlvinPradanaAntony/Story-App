@@ -1,116 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="66dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="68dp"
-        android:background="@drawable/container_rounded1"
-        android:elevation="12dp"
-        android:outlineAmbientShadowColor="@color/shadowColor"
-        android:outlineSpotShadowColor="@color/shadowColor"
-        app:layout_constraintHorizontal_bias="0.046"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="68dp"
+            android:background="@drawable/container_rounded1"
+            android:elevation="12dp"
+            android:outlineAmbientShadowColor="@color/shadowColor"
+            android:outlineSpotShadowColor="@color/shadowColor"
+            app:layout_constraintHorizontal_bias="0.046"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/logo1" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/gilroy_bold"
+            android:text="@string/HeadlineLogin"
+            android:textColor="#535454"
+            android:textSize="32sp"
+            app:layout_constraintStart_toStartOf="@+id/frameLayout"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/nunito_sans_regular"
+            android:text="@string/CaptionLogin"
+            android:textColor="#A9A9A9"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:src="@drawable/logo1" />
-    </FrameLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-100dp"
+            android:layout_marginEnd="-100dp"
+            android:src="@drawable/abtract1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/gilroy_bold"
-        android:text="Hey There !"
-        android:textColor="#535454"
-        android:textSize="32sp"
-        app:layout_constraintStart_toStartOf="@+id/frameLayout"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        <com.devcode.storyapp.ui.customView.CustomEditText
+            android:id="@+id/txt_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="52dp"
+            android:drawableStart="@drawable/ic_message"
+            android:drawablePadding="8dp"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:padding="18dp"
+            android:textColor="@color/textColorCaption"
+            android:textColorHint="@color/textColorCaption2"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.457"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/nunito_sans_regular"
-        android:text="It’s time to make ur journey! Let’s get started now."
-        android:textColor="#A9A9A9"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <com.devcode.storyapp.ui.customView.CustomEditText
+            android:id="@+id/txt_pass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawableEnd="@drawable/ic_password"
+            android:drawablePadding="8dp"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:padding="18dp"
+            android:textColor="@color/textColorCaption"
+            android:textColorHint="@color/textColorCaption2"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_email" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-100dp"
-        android:layout_marginEnd="-100dp"
-        android:src="@drawable/abtract1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/style_buttonlogin"
+            android:fontFamily="@font/nunito_sans_bold"
+            android:text="@string/btn_login"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txt_pass"
+            app:layout_constraintStart_toStartOf="@+id/txt_pass"
+            app:layout_constraintTop_toBottomOf="@+id/txt_pass" />
 
-    <com.devcode.storyapp.ui.customView.CustomEditText
-        android:id="@+id/txt_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="18dp"
-        android:layout_marginTop="52dp"
-        android:drawableStart="@drawable/ic_message"
-        android:drawablePadding="8dp"
-        android:hint="Email"
-        android:padding="18dp"
-        android:textColor="@color/textColorCaption"
-        android:textColorHint="@color/textColorCaption2"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="s"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.devcode.storyapp.ui.customView.CustomEditText
-        android:id="@+id/txt_pass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="18dp"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_lock"
-        android:drawableEnd="@drawable/ic_password"
-        android:drawablePadding="8dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textColorHint="@color/textColorCaption2"
-        android:padding="18dp"
-        android:textColor="@color/textColorCaption"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_email" />
-
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/style_buttonlogin"
-        android:text="Login"
-        android:fontFamily="@font/nunito_sans_bold"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/txt_pass"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/txt_pass"
-        app:layout_constraintTop_toBottomOf="@+id/txt_pass" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

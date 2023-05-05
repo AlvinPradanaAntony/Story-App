@@ -3,4 +3,11 @@
     <string name="title_logo">StoryApp</string>
 
     <string name="password_minimum_character">Password must be at least 8 characters</string>
+    <string name="email_invalid">Format email is invalid</string>
+    <string name="HeadlineLogin">Hey There !</string>
+    <string name="CaptionLogin">It’s time to make ur journey! Let’s get started now.</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Login</string>
+
 </resources>
