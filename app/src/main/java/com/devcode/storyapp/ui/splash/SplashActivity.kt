@@ -60,10 +60,8 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun customSpanTitleLogo(){
-        val text = "StoryApp"
         val txtLogo = binding.txtLogo
-        val spannableString = SpannableString(text)
-        spannableString.setSpan(ForegroundColorSpan(Color.BLACK), 0, 5, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val spannableString = SpannableString("StoryApp")
         spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#F79738")), 5, 8, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         txtLogo.text = spannableString
     }

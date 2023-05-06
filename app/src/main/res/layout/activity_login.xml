@@ -22,7 +22,8 @@
             android:outlineSpotShadowColor="@color/shadowColor"
             app:layout_constraintHorizontal_bias="0.046"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="p">
 
             <ImageView
                 android:layout_width="40dp"
@@ -68,13 +69,14 @@
             android:id="@+id/txt_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:minHeight="56dp"
             android:layout_marginHorizontal="18dp"
             android:layout_marginTop="52dp"
             android:drawableStart="@drawable/ic_message"
             android:drawablePadding="8dp"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
-            android:padding="18dp"
+            android:paddingHorizontal="18dp"
             android:textColor="@color/textColorCaption"
             android:textColorHint="@color/textColorCaption2"
             android:textSize="12sp"
@@ -87,14 +89,12 @@
             android:id="@+id/txt_pass"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:minHeight="56dp"
             android:layout_marginHorizontal="18dp"
             android:layout_marginTop="16dp"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawableEnd="@drawable/ic_password"
-            android:drawablePadding="8dp"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
-            android:padding="18dp"
+            android:paddingHorizontal="18dp"
             android:textColor="@color/textColorCaption"
             android:textColorHint="@color/textColorCaption2"
             android:textSize="12sp"
@@ -103,22 +103,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_email" />
 
-        <Button
+        <com.devcode.storyapp.ui.customView.CustomButton
             android:id="@+id/button"
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="52dp"
-            android:layout_marginBottom="32dp"
             android:background="@drawable/style_buttonlogin"
             android:fontFamily="@font/nunito_sans_bold"
             android:text="@string/btn_login"
             android:textAllCaps="false"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/txt_pass"
             app:layout_constraintStart_toStartOf="@+id/txt_pass"
             app:layout_constraintTop_toBottomOf="@+id/txt_pass" />
-        
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button">
+            <TextView
+                android:id="@+id/txt_dont_have_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:text="@string/suggestion2register"/>
+            <TextView
+                android:id="@+id/txt_registernow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="@font/nunito_sans_semibold"
+                android:text="@string/register_now"/>
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

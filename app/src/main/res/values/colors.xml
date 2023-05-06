@@ -10,12 +10,15 @@
     <color name="red_200">#CF212A</color>
 
     <color name="colorPrimary">#F79738</color>
+    <color name="colorPrimaryLight">#FFC57D</color>
+    <color name="colorPrimaryDark">#D9771C </color>
     <color name="shadowColor">#4D22292E</color>
     <color name="statusBarColor">#DBDBDB</color>
     <color name="backgroundColorField">#F1F6FB</color>
     <color name="textColorPrimary">#535454</color>
     <color name="textColorCaption">#848484</color>
     <color name="textColorCaption2">#A1A1A1</color>
+
 
 
 
