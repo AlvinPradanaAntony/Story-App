@@ -3,11 +3,9 @@ package com.devcode.storyapp.ui.splash
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,14 +13,9 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.view.animation.AlphaAnimation
-import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.devcode.storyapp.MainActivity
-import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ActivitySplashBinding
 import com.devcode.storyapp.ui.login.LoginActivity
 
