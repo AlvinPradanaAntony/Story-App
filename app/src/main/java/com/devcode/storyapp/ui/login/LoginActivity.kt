@@ -22,8 +22,10 @@ import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.home.MainActivity
 import com.devcode.storyapp.ui.register.RegisterActivity
+import com.google.android.material.snackbar.Snackbar
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
@@ -37,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
         customLogo()
         setupViewModel()
         observeLoading()
+        observeErrorMesage()
         setupAction()
     }
 
@@ -55,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.txtRegisternow.setOnClickListener() {
-            startActivity(Intent(this,RegisterActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
         binding.buttonLogin.setOnClickListener {
             val email = binding.edLoginEmail.text?.trim().toString()
@@ -69,39 +72,41 @@ class LoginActivity : AppCompatActivity() {
                     create()
                     show()
                 }
-            } else{
-                if (email.isEmpty()){
+            } else {
+                if (email.isEmpty()) {
                     binding.edLoginEmail.error = "Input Email Cannot be Empty"
                     binding.edLoginEmail.requestFocus()
-                } else if(password.isEmpty()){
+                } else if (password.isEmpty()) {
                     binding.edLoginPassword.error = "Input Password Cannot be Empty"
                     binding.edLoginPassword.requestFocus()
-                } else if (!isValidEmail(email)){
+                } else if (!isValidEmail(email)) {
                     binding.edLoginEmail.error = resources.getString(R.string.email_invalid)
                     binding.edLoginEmail.requestFocus()
-                } else if(password.length<8){
-                    binding.edLoginPassword.error = resources.getString(R.string.password_minimum_character)
+                } else if (password.length < 8) {
+                    binding.edLoginPassword.error =
+                        resources.getString(R.string.password_minimum_character)
                     binding.edLoginPassword.requestFocus()
-                } else{
+                } else {
                     binding.edLoginEmail.clearFocus()
                     binding.edLoginPassword.clearFocus()
                     hideKeyboard()
                     login(email, password)
-                 }
+                }
             }
         }
     }
 
-    private fun login(email: String, password: String){
+    private fun login(email: String, password: String) {
         loginViewModel.postLogin(email, password)
-        loginViewModel.login()
         loginViewModel.loginUser.observe(this) { user ->
             val name = user.loginResult?.name.toString()
             val token = user.loginResult?.token.toString()
-            loginViewModel.saveUser(UserModel(name, token, true))
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (user != null) {
+                loginViewModel.saveUser(UserModel(name, token, true))
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 
@@ -109,12 +114,13 @@ class LoginActivity : AppCompatActivity() {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun hideKeyboard(){
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 
-    private fun customLogo(){
+    private fun customLogo() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             binding.frameLayout.outlineAmbientShadowColor = getColor(R.color.shadowColor)
             binding.frameLayout.outlineSpotShadowColor = getColor(R.color.shadowColor)
@@ -127,6 +133,18 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.isLoading.observe(this) {
             showLoading(it)
         }
+    }
+
+    private fun observeErrorMesage() {
+        loginViewModel.isError.observe(this) {
+            showSnackBar(it)
+        }
+    }
+
+    private fun showSnackBar(value: String) {
+        Snackbar.make(
+            binding.buttonLogin, value, Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun showLoading(isLoading: Boolean) {

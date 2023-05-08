@@ -7,6 +7,7 @@ import com.devcode.storyapp.db.LoginResponse
 import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +19,9 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isError = MutableLiveData<String>()
+    val isError: LiveData<String> = _isError
+
     fun postLogin(email: String, password: String) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().login(email, password)
@@ -26,18 +30,24 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
                 call: Call<LoginResponse>,
                 response: Response<LoginResponse>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
-                    _isLoading.value = false
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error) {
                         _loginUser.postValue(response.body())
                     }
+                } else {
+                    val responseError = response.errorBody()?.string()
+                    val objErr = JSONObject(responseError.toString())
+                    _isError.value = objErr.getString("message")?: response.message()
+                    Log.d("PostLoginOnResponse", "onResponse: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                _isLoading.value = true
-                Log.d(TAG, "onFailure: ${t.message.toString()}")
+                _isLoading.value = false
+                _isError.value = t.message
+                Log.d("PostLoginOnFailure", "onFailure: ${t.message.toString()}")
             }
         })
     }
