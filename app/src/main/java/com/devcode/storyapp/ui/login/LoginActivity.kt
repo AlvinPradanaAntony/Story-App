@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
@@ -17,6 +19,7 @@ import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityLoginBinding
 import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
+import com.devcode.storyapp.ui.home.MainActivity
 import com.devcode.storyapp.ui.register.RegisterActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -24,16 +27,16 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
     private lateinit var user: UserModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         customLogo()
         setupViewModel()
-        validation()
-        binding.txtRegisternow.setOnClickListener() {
-            startActivity(Intent(this,RegisterActivity::class.java))
-        }
+        observeLoading()
+        setupAction()
     }
 
 
@@ -42,13 +45,17 @@ class LoginActivity : AppCompatActivity() {
             this,
             ViewModelFactory(UserPreferences.getInstance(dataStore))
         )[LoginViewModel::class.java]
-
         loginViewModel.getUser().observe(this) { user ->
             this.user = user
+            Log.d("CekTokenLogin", "Token: ${user.token}")
+            Log.d("CekNameLogin", "Name: ${user.name}")
         }
     }
 
-    private fun validation() {
+    private fun setupAction() {
+        binding.txtRegisternow.setOnClickListener() {
+            startActivity(Intent(this,RegisterActivity::class.java))
+        }
         binding.buttonLogin.setOnClickListener {
             val email = binding.edLoginEmail.text?.trim().toString()
             val password = binding.edLoginPassword.text?.trim().toString()
@@ -75,11 +82,25 @@ class LoginActivity : AppCompatActivity() {
                     binding.edLoginPassword.error = resources.getString(R.string.password_minimum_character)
                     binding.edLoginPassword.requestFocus()
                 } else{
-                    Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show()
+                    login(email, password)
                  }
             }
         }
     }
+
+    private fun login(email: String, password: String){
+        loginViewModel.postLogin(email, password)
+        loginViewModel.login()
+        loginViewModel.loginUser.observe(this) { user ->
+            val name = user.loginResult?.name.toString()
+            val token = user.loginResult?.token.toString()
+            loginViewModel.saveUser(UserModel(name, token, true))
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
@@ -91,5 +112,16 @@ class LoginActivity : AppCompatActivity() {
         } else {
             binding.frameLayout.elevation = 6f
         }
+    }
+
+    private fun observeLoading() {
+        loginViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.overlayBg.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

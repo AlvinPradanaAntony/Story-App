@@ -18,6 +18,7 @@
     <color name="textColorPrimary">#535454</color>
     <color name="textColorCaption">#848484</color>
     <color name="textColorCaption2">#A1A1A1</color>
+    <color name="colorOverlay">#74000000</color>
 
 
 

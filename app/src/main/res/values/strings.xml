@@ -19,5 +19,6 @@
     <string name="already_have_an_account">Already have an account?\u0020</string>
     <string name="submit">Submit</string>
     <string name="full_name">Full Name</string>
+    <string name="greeting">Hi %1$s,</string>
 
 </resources>
