@@ -51,6 +51,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+            mainViewModel.logout()
         }
+    }
+
+    companion object {
+        const val EXTRA_NAME = "extra_name"
     }
 }

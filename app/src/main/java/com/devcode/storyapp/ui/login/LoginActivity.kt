@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
@@ -82,6 +83,9 @@ class LoginActivity : AppCompatActivity() {
                     binding.edLoginPassword.error = resources.getString(R.string.password_minimum_character)
                     binding.edLoginPassword.requestFocus()
                 } else{
+                    binding.edLoginEmail.clearFocus()
+                    binding.edLoginPassword.clearFocus()
+                    hideKeyboard()
                     login(email, password)
                  }
             }
@@ -103,6 +107,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun hideKeyboard(){
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 
     private fun customLogo(){
