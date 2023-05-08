@@ -9,7 +9,6 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -24,7 +23,7 @@ import com.devcode.storyapp.ui.home.MainActivity
 import com.devcode.storyapp.ui.register.RegisterActivity
 import com.google.android.material.snackbar.Snackbar
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
@@ -101,12 +100,11 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginUser.observe(this) { user ->
             val name = user.loginResult?.name.toString()
             val token = user.loginResult?.token.toString()
-            if (user != null) {
-                loginViewModel.saveUser(UserModel(name, token, true))
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
+            loginViewModel.saveUser(UserModel(name, token, true))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
         }
     }
 

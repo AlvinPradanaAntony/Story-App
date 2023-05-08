@@ -28,7 +28,7 @@ import com.devcode.storyapp.ui.home.MainActivity
 import com.devcode.storyapp.ui.home.MainViewModel
 import com.devcode.storyapp.ui.login.LoginActivity
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
@@ -46,11 +46,9 @@ class SplashActivity : AppCompatActivity() {
         setupViewModel()
         Handler(Looper.getMainLooper()).postDelayed({
             if (isLogin){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, MainActivity::class.java))
             } else{
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, LoginActivity::class.java))
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()

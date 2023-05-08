@@ -62,12 +62,6 @@ class LoginViewModel(private val pref: UserPreferences) : ViewModel() {
         return pref.getUser().asLiveData()
     }
 
-    fun login() {
-        viewModelScope.launch {
-            pref.login()
-        }
-    }
-
     companion object {
         private const val TAG = "LoginViewModel"
     }

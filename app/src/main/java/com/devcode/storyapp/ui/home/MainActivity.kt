@@ -19,7 +19,7 @@ import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.login.LoginActivity
 import com.devcode.storyapp.ui.login.Session
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.logoutButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
             mainViewModel.logout()
         }
