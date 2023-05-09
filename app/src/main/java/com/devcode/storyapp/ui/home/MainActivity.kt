@@ -31,6 +31,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var userToken: String
     private val list = ArrayList<ListStoryItem>()
     private val adapter: StoryAdapter by lazy {
         StoryAdapter(list)
@@ -40,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         setupViewModel()
         observeLoading()
@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.getUser().observe(this) { user ->
             binding.txtUsernameAccount.text = user.name.replaceFirstChar { it.uppercase() }
+            userToken = user.token
             stories(user.token)
         }
     }
@@ -67,6 +68,10 @@ class MainActivity : AppCompatActivity() {
                 setRecycleView()
             }
         }
+    }
+    override fun onResume() {
+        super.onResume()
+        stories(userToken)
     }
 
     private fun setRecycleView() {

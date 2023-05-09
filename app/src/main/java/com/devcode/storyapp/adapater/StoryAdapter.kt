@@ -13,8 +13,7 @@ import com.devcode.storyapp.databinding.ItemRowBinding
 import com.devcode.storyapp.db.ListStoryItem
 import com.devcode.storyapp.db.StoryAPIResponse
 
-class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) :
-    RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
+class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

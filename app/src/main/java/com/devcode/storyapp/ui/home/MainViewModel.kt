@@ -23,7 +23,6 @@ class MainViewModel(private val pref: UserPreferences) : ViewModel() {
     private val _isError = MutableLiveData<String>()
     val isError: LiveData<String> = _isError
 
-
     fun postStory(token: String) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getStories("Bearer $token")
@@ -32,13 +31,14 @@ class MainViewModel(private val pref: UserPreferences) : ViewModel() {
                 call: Call<StoryAPIResponse>,
                 response: Response<StoryAPIResponse>
             ) {
-                _isLoading.value = false
                 if (response.isSuccessful) {
+                    _isLoading.value = false
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error) {
                         _isStory.postValue(response.body())
                     }
                 } else {
+                    _isLoading.value = false
                     val responseError = response.errorBody()?.string()
                     val objErr = JSONObject(responseError.toString())
                     _isError.value = objErr.getString("message")?: response.message()
@@ -54,15 +54,8 @@ class MainViewModel(private val pref: UserPreferences) : ViewModel() {
         })
     }
 
-
     fun getUser(): LiveData<UserModel> {
         return pref.getUser().asLiveData()
-    }
-
-    fun logout() {
-        viewModelScope.launch {
-            pref.logout()
-        }
     }
 
 }

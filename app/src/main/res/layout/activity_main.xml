@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".ui.home.MainActivity">
 
     <ProgressBar
@@ -27,8 +26,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_sans_regular"
-            android:text="Welcome to StoryApp,"
+            android:text="@string/greetings"
             android:textSize="14sp"
+            android:layout_marginStart="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +39,7 @@
             android:fontFamily="@font/gilroy_extrabold"
             android:text="@string/username_account"
             android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txt_greeting"
             app:layout_constraintTop_toBottomOf="@+id/txt_greeting" />
 
         <ImageButton
@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
+            android:layout_marginEnd="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -80,8 +81,6 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_username_account" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fav_button"
         android:layout_width="wrap_content"
@@ -95,41 +94,5 @@
         android:src="@drawable/ic_add"
         app:rippleColor="#8FFFFFFF"
         app:tint="@color/white" />
-
-    <!--    <TextView
-            android:id="@+id/txt_username_account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:lines="1"
-            android:maxLines="1"
-            android:text=""
-            android:hint="Hi user!"
-            android:textColor="@color/black"
-            android:textSize="34sp" />
-
-        <TextView
-            android:id="@+id/txt_headlineHome"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:text="Selamat datang di aplikasi StoryApp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            />
-
-        <Button
-            android:id="@+id/logoutButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:text="Logout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/messageTextView" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
