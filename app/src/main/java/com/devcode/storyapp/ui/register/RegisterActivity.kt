@@ -1,6 +1,9 @@
 package com.devcode.storyapp.ui.register
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +19,7 @@ import com.devcode.storyapp.R
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityRegisterBinding
 import com.devcode.storyapp.model.UserPreferences
+import com.devcode.storyapp.ui.login.LoginActivity
 import com.google.android.material.snackbar.Snackbar
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
@@ -32,6 +36,7 @@ class RegisterActivity : AppCompatActivity() {
         observeLoading()
         observeErrorMesage()
         setupAction()
+        playAnimation()
     }
 
     private fun setupViewModel() {
@@ -41,7 +46,25 @@ class RegisterActivity : AppCompatActivity() {
         )[RegisterViewModel::class.java]
     }
 
+    private fun playAnimation(){
+        val name = ObjectAnimator.ofFloat(binding.edRegisterName, View.ALPHA, 1f).setDuration(325)
+        val email = ObjectAnimator.ofFloat(binding.edRegisterEmail, View.ALPHA, 1f).setDuration(325)
+        val password = ObjectAnimator.ofFloat(binding.edRegisterPassword, View.ALPHA, 1f).setDuration(325)
+        val confirm = ObjectAnimator.ofFloat(binding.edRegisterConfirmPass, View.ALPHA, 1f).setDuration(325)
+        val btn_register = ObjectAnimator.ofFloat(binding.buttonRegister, View.ALPHA, 1f).setDuration(325)
+        val sugges = ObjectAnimator.ofFloat(binding.suggestLogin, View.ALPHA, 1f).setDuration(325)
+
+        AnimatorSet().apply {
+            playSequentially(name, email, password, confirm, btn_register, sugges)
+            startDelay = 325
+        }.start()
+    }
+
     private fun setupAction() {
+        binding.txtLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finishAffinity()
+        }
         binding.buttonRegister.setOnClickListener {
             val fullName = binding.edRegisterName.text?.trim().toString()
             val emailRegister = binding.edRegisterEmail.text?.trim().toString()

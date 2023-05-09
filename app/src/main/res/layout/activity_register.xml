@@ -113,7 +113,8 @@
                     android:paddingHorizontal="18dp"
                     android:textColor="@color/textColorCaption"
                     android:textColorHint="@color/textColorCaption2"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:alpha="0"/>
 
                 <com.devcode.storyapp.ui.customView.CustomEditText
                     android:id="@+id/ed_register_email"
@@ -128,7 +129,8 @@
                     android:paddingHorizontal="18dp"
                     android:textColor="@color/textColorCaption"
                     android:textColorHint="@color/textColorCaption2"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:alpha="0"/>
 
                 <com.devcode.storyapp.ui.customView.CustomEditText
                     android:id="@+id/ed_register_password"
@@ -141,7 +143,8 @@
                     android:paddingHorizontal="18dp"
                     android:textColor="@color/textColorCaption"
                     android:textColorHint="@color/textColorCaption2"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:alpha="0"/>
 
                 <com.devcode.storyapp.ui.customView.CustomEditText
                     android:id="@+id/ed_register_confirmPass"
@@ -154,7 +157,8 @@
                     android:paddingHorizontal="18dp"
                     android:textColor="@color/textColorCaption"
                     android:textColorHint="@color/textColorCaption2"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:alpha="0"/>
             </LinearLayout>
 
             <com.devcode.storyapp.ui.customView.CustomButton
@@ -169,9 +173,11 @@
                 android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout"
                 app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                android:alpha="0"/>
 
             <LinearLayout
+                android:id="@+id/suggest_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -181,7 +187,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_register">
+                app:layout_constraintTop_toBottomOf="@+id/button_register"
+                android:alpha="0">
                 <TextView
                     android:id="@+id/txt_already_have_account"
                     android:layout_width="wrap_content"

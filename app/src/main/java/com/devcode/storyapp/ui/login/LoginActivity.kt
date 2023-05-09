@@ -1,5 +1,7 @@
 package com.devcode.storyapp.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -40,8 +42,20 @@ class LoginActivity : AppCompatActivity() {
         observeLoading()
         observeErrorMesage()
         setupAction()
+        playAnimation()
     }
 
+    private fun playAnimation(){
+        val email = ObjectAnimator.ofFloat(binding.edLoginEmail, View.ALPHA, 1f).setDuration(325)
+        val password = ObjectAnimator.ofFloat(binding.edLoginPassword, View.ALPHA, 1f).setDuration(325)
+        val btn_login = ObjectAnimator.ofFloat(binding.buttonLogin, View.ALPHA, 1f).setDuration(325)
+        val sugges = ObjectAnimator.ofFloat(binding.suggestRegister, View.ALPHA, 1f).setDuration(325)
+
+        AnimatorSet().apply {
+            playSequentially(email, password, btn_login, sugges)
+            startDelay = 325
+        }.start()
+    }
 
     private fun setupViewModel() {
         loginViewModel = ViewModelProvider(
