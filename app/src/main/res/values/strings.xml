@@ -20,5 +20,11 @@
     <string name="submit">Submit</string>
     <string name="full_name">Full Name</string>
     <string name="greeting">Hi %1$s,</string>
+    <string name="addstories">addStories</string>
+    <string name="photoprofiles">photoProfiles</string>
+    <string name="username_account">User</string>
+    <string name="image_preview">Image Preview</string>
+    <string name="camera">Camera</string>
+    <string name="description">Description</string>
 
 </resources>

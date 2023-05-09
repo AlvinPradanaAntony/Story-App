@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.view.Gravity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import com.devcode.storyapp.R
@@ -39,7 +38,7 @@ class CustomButton : AppCompatButton {
   }
 
   private fun init(){
-    enabledBackground = ContextCompat.getDrawable(context, R.drawable.style_buttonlogin) as Drawable
-    disabledBackground = ContextCompat.getDrawable(context, R.drawable.style_buttonlogin_disabled) as Drawable
+    enabledBackground = ContextCompat.getDrawable(context, R.drawable.style_button) as Drawable
+    disabledBackground = ContextCompat.getDrawable(context, R.drawable.style_button_disabled) as Drawable
   }
 }

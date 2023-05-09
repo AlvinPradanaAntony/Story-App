@@ -44,13 +44,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.logoutButton.setOnClickListener {
+/*        binding.logoutButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
             mainViewModel.logout()
-        }
+        }*/
     }
 
     companion object {

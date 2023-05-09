@@ -63,7 +63,7 @@
                 android:layout_marginTop="28dp"
                 android:fontFamily="@font/gilroy_bold"
                 android:text="@string/HeadlineLogin"
-                android:textColor="#535454"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="32sp"
                 app:layout_constraintStart_toStartOf="@+id/frameLayout"
                 app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
@@ -75,7 +75,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito_sans_regular"
                 android:text="@string/CaptionLogin"
-                android:textColor="#A9A9A9"
+                android:textColor="@color/textColorCaption2"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -132,7 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="52dp"
-                android:background="@drawable/style_buttonlogin"
+                android:background="@drawable/style_button"
                 android:fontFamily="@font/nunito_sans_bold"
                 android:text="@string/btn_login"
                 android:textAllCaps="false"
