@@ -43,12 +43,14 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_greeting" />
 
         <ImageButton
+            android:id="@+id/set_language"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="14dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/photoprofiles"
             android:src="@drawable/ic_language"
+            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
             app:layout_constraintTop_toTopOf="@+id/cardView" />
@@ -63,9 +65,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/iv_photo"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:scaleType="centerCrop"
+                android:clickable="true"
                 android:src="@drawable/profiles" />
         </androidx.cardview.widget.CardView>
 

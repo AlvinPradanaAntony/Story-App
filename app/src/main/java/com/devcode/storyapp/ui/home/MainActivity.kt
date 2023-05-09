@@ -1,30 +1,25 @@
 package com.devcode.storyapp.ui.home
 
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.WindowManager
-import androidx.annotation.StringRes
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.devcode.storyapp.R
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.adapater.StoryAdapter
 import com.devcode.storyapp.databinding.ActivityMainBinding
 import com.devcode.storyapp.db.ListStoryItem
-import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.detailStories.DetailActivity
-import com.devcode.storyapp.ui.login.LoginActivity
-import com.devcode.storyapp.ui.login.Session
 import com.google.android.material.snackbar.Snackbar
+import android.provider.Settings
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 
@@ -45,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         setupViewModel()
         observeLoading()
         observeErrorMessage()
+        setupAction()
     }
 
     private fun setupViewModel() {
@@ -54,7 +50,13 @@ class MainActivity : AppCompatActivity() {
         )[MainViewModel::class.java]
 
         mainViewModel.getUser().observe(this) { user ->
-            binding.txtUsernameAccount.text = user.name.replaceFirstChar { it.uppercase() }
+            val name = user.name
+            binding.txtUsernameAccount.text = name.replaceFirstChar { it.uppercase() }
+            Glide.with(this)
+                .load("https://ui-avatars.com/api/?name=$name&size=128&background=random")
+                .placeholder(R.drawable.ic_placeholder_photo)
+                .error(R.drawable.ic_placeholder_photo)
+                .into(binding.ivPhoto)
             userToken = user.token
             stories(user.token)
         }
@@ -79,10 +81,6 @@ class MainActivity : AppCompatActivity() {
         binding.rvStories.layoutManager = layoutManager
         binding.rvStories.setHasFixedSize(true)
         binding.rvStories.adapter = adapter
-        setupAction()
-    }
-
-    private fun setupAction() {
         adapter.setOnItemClickCallback(object : StoryAdapter.OnItemClickCallback {
             override fun onItemClicked(data: ListStoryItem) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
@@ -90,6 +88,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         })
+    }
+
+    private fun setupAction() {
+        binding.setLanguage.setOnClickListener{
+            startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+        }
     }
 
     private fun observeLoading() {

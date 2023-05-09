@@ -34,7 +34,7 @@ class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : Recycler
         val apiUrl = "https://ui-avatars.com/api/?name=$name&size=128&background=random"
         holder.binding.tvItemName.text = name
         holder.binding.tvItemDescription.text = listStories[position].description
-        loadImage(apiUrl, holder.binding.profileImage, R.drawable.profiles)
+        loadImage(apiUrl, holder.binding.profileImage, R.drawable.ic_placeholder_photo)
         loadImage(listStories[position].photoUrl, holder.binding.ivItemPhoto, R.drawable.bg_post_image)
         holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listStories[holder.adapterPosition]) }
     }
@@ -42,6 +42,7 @@ class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : Recycler
     private fun loadImage(url: String, imageView: ImageView, placeholder: Int) {
         Glide.with(imageView.context)
             .load(url)
+            .placeholder(placeholder)
             .error(placeholder)
             .into(imageView)
     }

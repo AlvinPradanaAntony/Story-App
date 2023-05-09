@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="title_logo">StoryApp</string>
+
+    <string name="password_minimum_character">Kata Sandi Minimal 8 Karakter</string>
+    <string name="password_not_match">Password Tidak sama</string>
+    <string name="email_invalid">Format Email Tidak Sesuai</string>
+    <string name="HeadlineLogin">Halo Disana!</string>
+    <string name="CaptionLogin">Yuk waktunya buat jurnal perjalananmu! Ayo mulai sekarang!</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Kata Sandi</string>
+    <string name="btn_login">Masuk</string>
+    <string name="btn_register">Daftar</string>
+    <string name="suggestion2register">Apakah belum punya akun?</string>
+    <string name="register_now">\\u0020Daftar Sekarang!</string>
+    <string name="register">Daftar</string>
+    <string name="registerCaption">Buat akun Anda dan mulailah perjalanan Anda bersama kami</string>
+    <string name="confirm_password">Konfirmasi kata sandi</string>
+    <string name="already_have_an_account">Anda sudah punya akun?\\u0020</string>
+    <string name="submit">Submit</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="greeting">Hi %1$s,</string>
+    <string name="addstories">tambahStories</string>
+    <string name="photoprofiles">fotoProfiles</string>
+    <string name="username_account">Akun</string>
+    <string name="image_preview">Pratinjau Gambar</string>
+    <string name="camera">Kamera</string>
+    <string name="description">Deskripsi</string>
+    <string name="share">Bagikan</string>
+    <string name="upload">Unggah</string>
+    <string name="greetings">Selamat Datang di StoryApp,</string>
+</resources>

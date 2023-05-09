@@ -2,9 +2,9 @@
     <string name="app_name">StoryApp</string>
     <string name="title_logo">StoryApp</string>
 
-    <string name="password_minimum_character">Password must be at least 8 characters</string>
+    <string name="password_minimum_character">Password Must Be at Least 8 Characters</string>
     <string name="password_not_match">Password entered is not the same</string>
-    <string name="email_invalid">Format email is invalid</string>
+    <string name="email_invalid">Format Email is Invalid</string>
     <string name="HeadlineLogin">Hey There !</string>
     <string name="CaptionLogin">It’s time to make ur journey! Let’s get started now.</string>
     <string name="hint_email">Email</string>
@@ -15,7 +15,7 @@
     <string name="register_now">\u0020Register Now!</string>
     <string name="register">Register</string>
     <string name="registerCaption">Create your account and start your journey with us</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="already_have_an_account">Already have an account?\u0020</string>
     <string name="submit">Submit</string>
     <string name="full_name">Full Name</string>
