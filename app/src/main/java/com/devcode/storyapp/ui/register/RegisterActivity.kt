@@ -1,36 +1,47 @@
 package com.devcode.storyapp.ui.register
 
-import android.content.Intent
+import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.Toast
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.R
+import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityRegisterBinding
-import com.devcode.storyapp.ui.login.LoginActivity
+import com.devcode.storyapp.model.UserPreferences
+import com.google.android.material.snackbar.Snackbar
 
-
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var registerViewModel: RegisterViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         customLogo()
-        validation()
-        binding.txtLogin.setOnClickListener() {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+        setupViewModel()
+        observeLoading()
+        observeErrorMesage()
+        setupAction()
     }
 
     private fun setupViewModel() {
-
+        registerViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreferences.getInstance(dataStore))
+        )[RegisterViewModel::class.java]
     }
 
-    private fun validation() {
+    private fun setupAction() {
         binding.buttonRegister.setOnClickListener {
             val fullName = binding.edRegisterName.text?.trim().toString()
             val emailRegister = binding.edRegisterEmail.text?.trim().toString()
@@ -69,9 +80,45 @@ class RegisterActivity : AppCompatActivity() {
                     binding.edRegisterConfirmPass.error = "Password Tidak Sama"
                     binding.edRegisterConfirmPass.requestFocus()
                 } else {
-                    Toast.makeText(this, "Daftar Berhasil", Toast.LENGTH_SHORT).show()
+                    binding.edRegisterName.clearFocus()
+                    binding.edRegisterEmail.clearFocus()
+                    binding.edRegisterPassword.clearFocus()
+                    hideKeyboard()
+                    register(fullName, emailRegister, passwordRegister)
                 }
             }
+        }
+    }
+
+    private fun register(name:String, email: String, password: String) {
+        registerViewModel.postRegister(name, email, password)
+        registerViewModel.registerUser.observe(this) { user ->
+            AlertDialog.Builder(this@RegisterActivity).apply {
+                setTitle("Yeah!")
+                setMessage("Your account is created and ready to use. Login and see what other people is up to!")
+                setPositiveButton("Continue") { _, _ ->
+                    finish()
+                }
+                create()
+                show()
+            }
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
+    }
+
+    private fun observeLoading() {
+        registerViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+    }
+
+    private fun observeErrorMesage() {
+        registerViewModel.isError.observe(this) {
+            showSnackBar(it)
         }
     }
 
@@ -86,5 +133,16 @@ class RegisterActivity : AppCompatActivity() {
         } else {
             binding.frameLayout.elevation = 6f
         }
+    }
+
+    private fun showSnackBar(value: String) {
+        Snackbar.make(
+            binding.buttonRegister, value, Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.overlayBg.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

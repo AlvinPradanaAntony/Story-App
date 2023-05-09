@@ -51,12 +51,13 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.getUser().observe(this) { user ->
             this.user = user
             Log.d("CekTokenLogin", "Token: ${user.token}")
+            Log.d("CekTokenEmail", "Token: ${user.email}")
             Log.d("CekNameLogin", "Name: ${user.name}")
         }
     }
 
     private fun setupAction() {
-        binding.txtRegisternow.setOnClickListener() {
+        binding.txtRegisternow.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
         binding.buttonLogin.setOnClickListener {
@@ -100,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginUser.observe(this) { user ->
             val name = user.loginResult?.name.toString()
             val token = user.loginResult?.token.toString()
-            loginViewModel.saveUser(UserModel(name, token, true))
+            loginViewModel.saveUser(UserModel(name, email, token, true))
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
