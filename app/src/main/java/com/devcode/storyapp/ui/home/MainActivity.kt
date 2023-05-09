@@ -20,6 +20,7 @@ import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.detailStories.DetailActivity
 import com.google.android.material.snackbar.Snackbar
 import android.provider.Settings
+import com.devcode.storyapp.ui.addStory.AddStoryActivity
 import com.devcode.storyapp.ui.profile.ProfileActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
@@ -97,6 +98,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.ivPhoto.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
+        }
+        binding.favButton.setOnClickListener {
+            startActivity(Intent(this, AddStoryActivity::class.java))
         }
     }
 
