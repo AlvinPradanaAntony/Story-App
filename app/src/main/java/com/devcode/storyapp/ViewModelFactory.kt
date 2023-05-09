@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.home.MainViewModel
 import com.devcode.storyapp.ui.login.LoginViewModel
+import com.devcode.storyapp.ui.profile.ProfileViewModel
 import com.devcode.storyapp.ui.register.RegisterViewModel
 
 
@@ -21,6 +22,9 @@ class ViewModelFactory(private val pref: UserPreferences) : ViewModelProvider.Ne
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
