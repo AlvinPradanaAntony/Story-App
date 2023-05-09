@@ -30,4 +30,5 @@
     <string name="share">Bagikan</string>
     <string name="upload">Unggah</string>
     <string name="greetings">Selamat Datang di StoryApp,</string>
+    <string name="logout">Keluar</string>
 </resources>

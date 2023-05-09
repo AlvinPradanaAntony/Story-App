@@ -29,5 +29,6 @@
     <string name="share">Share</string>
     <string name="upload">Upload</string>
     <string name="greetings">Welcome to StoryApp,</string>
+    <string name="logout">Logout</string>
 
 </resources>
