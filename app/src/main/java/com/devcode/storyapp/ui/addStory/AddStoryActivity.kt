@@ -10,17 +10,30 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ActivityAddStoryBinding
+import com.devcode.storyapp.db.ApiConfig
+import com.devcode.storyapp.db.FileUploadResponse
+import com.devcode.storyapp.reduceFileImage
 import com.devcode.storyapp.rotateFile
 import com.devcode.storyapp.ui.cameraActivity.CameraActivity
 import com.devcode.storyapp.uriToFile
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 
 class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddStoryBinding
+    private var getFile: File? = null
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -59,6 +72,21 @@ class AddStoryActivity : AppCompatActivity() {
 
         binding.buttonCamera.setOnClickListener { startCameraX() }
         binding.buttonGallery.setOnClickListener { startGallery() }
+        binding.butonAdd.setOnClickListener {
+            val description = binding.edAddDescription.text?.trim().toString()
+
+            if (description.isEmpty() && getFile == null) {
+                AlertDialog.Builder(this).apply {
+                    setTitle("Oops!")
+                    setMessage("Gambar dan Description tidak boleh kosong")
+                    setPositiveButton("OK") { _, _ -> }
+                    create()
+                    show()
+                }
+            }
+            uploadImage()
+
+        }
     }
     private fun startCameraX() {
         val intent = Intent(this, CameraActivity::class.java)
@@ -85,6 +113,7 @@ class AddStoryActivity : AppCompatActivity() {
 
             myFile?.let { file ->
                 rotateFile(file, isBackCamera)
+                getFile = file
                 binding.previewImg.setImageBitmap(BitmapFactory.decodeFile(file.path))
             }
         }
@@ -95,8 +124,45 @@ class AddStoryActivity : AppCompatActivity() {
             val selectedImg = result.data?.data as Uri
             selectedImg.let { uri ->
                 val myFile = uriToFile(uri, this@AddStoryActivity)
+                getFile = myFile
                 binding.previewImg.setImageURI(uri)
             }
+        }
+    }
+
+    private fun uploadImage() {
+        if (getFile != null) {
+            val file = reduceFileImage(getFile as File)
+
+            val description = "Ini adalah deksripsi gambar".toRequestBody("text/plain".toMediaType())
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                file.name,
+                requestImageFile
+            )
+
+            val service = ApiConfig.getApiService().uploadImageGuest(imageMultipart, description)
+            service.enqueue(object : Callback<FileUploadResponse> {
+                override fun onResponse(
+                    call: Call<FileUploadResponse>,
+                    response: Response<FileUploadResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null && !responseBody.error) {
+                            Toast.makeText(this@AddStoryActivity, responseBody.message, Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this@AddStoryActivity, response.message(), Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
+                    Toast.makeText(this@AddStoryActivity, "Gagal instance Retrofit", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            Toast.makeText(this@AddStoryActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
         }
     }
 

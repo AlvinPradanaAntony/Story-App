@@ -33,4 +33,11 @@ interface ApiService {
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
     ): Call<FileUploadResponse>
+
+    @Multipart
+    @POST("/v1/stories/guest")
+    fun uploadImageGuest(
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody,
+    ): Call<FileUploadResponse>
 }
