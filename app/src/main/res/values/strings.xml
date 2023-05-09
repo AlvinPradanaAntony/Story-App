@@ -26,5 +26,7 @@
     <string name="image_preview">Image Preview</string>
     <string name="camera">Camera</string>
     <string name="description">Description</string>
+    <string name="share">Share</string>
+    <string name="upload">Upload</string>
 
 </resources>
