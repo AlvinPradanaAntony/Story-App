@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.addStory.AddStoryActivity">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:elevation="15dp"
+        tools:visibility="visible"
+        android:layout_centerInParent="true"/>
+
+    <View
+        android:id="@+id/overlay_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorOverlay"
+        android:elevation="14dp"
+        android:visibility="gone"
+        android:clickable="true"
+        tools:visibility="visible"
+        android:focusable="true" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

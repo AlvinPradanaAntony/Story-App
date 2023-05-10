@@ -25,7 +25,8 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Profile"
         setupViewModel()
         setupAction()
     }
@@ -46,7 +47,10 @@ class ProfileActivity : AppCompatActivity() {
             binding.emailAccount.text = user.email
         }
     }
-
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
     private fun setupAction() {
         binding.btnLogout.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)

@@ -14,6 +14,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Detail Post"
 
         setupView()
         setupAction()
@@ -37,6 +39,11 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.ivDetailPhoto)
         binding.tvDetailName.text = story.name
         binding.tvDetailDescription.text = story.description
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     companion object {
