@@ -7,12 +7,12 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
@@ -31,6 +31,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddStoryBinding
@@ -72,7 +73,9 @@ class AddStoryActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
-
+        setupViewModel()
+        observeLoading()
+        observeErrorMesage()
         binding.buttonCamera.setOnClickListener { startCameraX() }
         binding.buttonGallery.setOnClickListener { startGallery() }
         binding.butonAdd.setOnClickListener {
@@ -87,9 +90,6 @@ class AddStoryActivity : AppCompatActivity() {
                     show()
                 }
             }
-            setupViewModel()
-            observeLoading()
-            observeErrorMesage()
             uploadImage()
         }
     }

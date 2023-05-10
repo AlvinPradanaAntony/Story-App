@@ -30,10 +30,10 @@
                 <ImageView
                     android:id="@+id/iv_detail_photo"
                     android:layout_width="wrap_content"
-                    android:layout_height="240dp"
+                    android:layout_height="220dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_baseline_image_24" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/wallpaper" />
 
             </androidx.cardview.widget.CardView>
 

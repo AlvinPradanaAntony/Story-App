@@ -1,13 +1,14 @@
 package com.devcode.storyapp.ui.home
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.devcode.storyapp.db.ApiConfig
-import com.devcode.storyapp.db.LoginResponse
 import com.devcode.storyapp.db.StoryAPIResponse
 import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback

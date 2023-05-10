@@ -12,11 +12,11 @@
     <string name="btn_login">Login</string>
     <string name="btn_register">Register</string>
     <string name="suggestion2register">Don’t Have an Account?</string>
-    <string name="register_now">\u0020Register Now!</string>
+    <string name="register_now">Register Now!</string>
     <string name="register">Register</string>
     <string name="registerCaption">Create your account and start your journey with us</string>
     <string name="confirm_password">Confirm password</string>
-    <string name="already_have_an_account">Already have an account?\u0020</string>
+    <string name="already_have_an_account">Already have an account?</string>
     <string name="submit">Submit</string>
     <string name="full_name">Full Name</string>
     <string name="greeting">Hi %1$s,</string>
@@ -30,5 +30,6 @@
     <string name="upload">Upload</string>
     <string name="greetings">Welcome to StoryApp,</string>
     <string name="logout">Logout</string>
+    <string name="gallery">Gallery</string>
 
 </resources>

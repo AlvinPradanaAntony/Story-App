@@ -13,7 +13,7 @@
     <string name="btn_login">Masuk</string>
     <string name="btn_register">Daftar</string>
     <string name="suggestion2register">Apakah belum punya akun?</string>
-    <string name="register_now">\\u0020Daftar Sekarang!</string>
+    <string name="register_now">Daftar Sekarang!</string>
     <string name="register">Daftar</string>
     <string name="registerCaption">Buat akun Anda dan mulailah perjalanan Anda bersama kami</string>
     <string name="confirm_password">Konfirmasi kata sandi</string>

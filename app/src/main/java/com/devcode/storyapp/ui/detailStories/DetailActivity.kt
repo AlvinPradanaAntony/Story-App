@@ -1,10 +1,9 @@
 package com.devcode.storyapp.ui.detailStories
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ActivityDetailBinding
 import com.devcode.storyapp.db.ListStoryItem
 

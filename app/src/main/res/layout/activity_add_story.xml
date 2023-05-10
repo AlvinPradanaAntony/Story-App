@@ -86,7 +86,7 @@
                     android:layout_height="42dp"
                     android:background="@drawable/style_button"
                     android:paddingHorizontal="20dp"
-                    android:text="Gallery"
+                    android:text="@string/gallery"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     app:backgroundTint="@null" />

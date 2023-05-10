@@ -6,12 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ItemRowBinding
 import com.devcode.storyapp.db.ListStoryItem
-import com.devcode.storyapp.db.StoryAPIResponse
 
 class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback

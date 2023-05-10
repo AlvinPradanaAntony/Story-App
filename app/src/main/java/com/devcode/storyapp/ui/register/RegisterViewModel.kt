@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devcode.storyapp.db.ApiConfig
-import com.devcode.storyapp.db.LoginResponse
 import com.devcode.storyapp.db.RegisterResponse
 import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
