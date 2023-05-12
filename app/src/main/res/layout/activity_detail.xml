@@ -33,7 +33,7 @@
                     android:layout_height="220dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/wallpaper"
+                    android:src="@drawable/bg_post_image"
                     android:contentDescription="@string/image_preview" />
 
             </androidx.cardview.widget.CardView>

@@ -43,10 +43,13 @@ class ProfileActivity : AppCompatActivity() {
                 .placeholder(R.drawable.ic_placeholder_photo)
                 .error(R.drawable.ic_placeholder_photo)
                 .into(binding.profileImage)
-            binding.usernameAccount.text = user.name
-            binding.emailAccount.text = user.email
+            binding.apply {
+                usernameAccount.text = user.name
+                emailAccount.text = user.email
+            }
         }
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()

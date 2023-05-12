@@ -53,7 +53,7 @@
                     android:layout_height="240dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/wallpaper"
+                    android:src="@drawable/bg_post_image"
                     android:contentDescription="@string/image_preview" />
 
             </androidx.cardview.widget.CardView>

@@ -14,6 +14,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import com.devcode.storyapp.R
 
 class CustomEditText: AppCompatEditText, View.OnTouchListener {
@@ -66,33 +67,27 @@ class CustomEditText: AppCompatEditText, View.OnTouchListener {
             setOnTouchListener(this)
         }
 
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Do nothing.
-            }
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (isEmail || isEmailRegister) {
-                    if (s.toString().isNotEmpty() && !isValidEmail(s.toString())) {
-                        error = resources.getString(R.string.email_invalid)
-                        isError = true
-                    } else {
-                        error = null
-                        isError = false
-                    }
-                } else if (isPassword || isPasswordRegister || isConfirmPassword) {
-                    if (s.toString().isNotEmpty() && s.toString().length < 8) {
-                        error = resources.getString(R.string.password_minimum_character)
-                        isError = true
-                    } else {
-                        error = null
-                        isError = false
-                    }
+        addTextChangedListener(onTextChanged = { s, _, _, _ ->
+            if (isEmail || isEmailRegister) {
+                if (s.toString().isNotEmpty() && !isValidEmail(s.toString())) {
+                    error = resources.getString(R.string.email_invalid)
+                    isError = true
+                } else {
+                    error = null
+                    isError = false
+                }
+            } else if (isPassword || isPasswordRegister || isConfirmPassword) {
+                if (s.toString().isNotEmpty() && s.toString().length < 8) {
+                    error = resources.getString(R.string.password_minimum_character)
+                    isError = true
+                } else {
+                    error = null
+                    isError = false
                 }
             }
-            override fun afterTextChanged(s: Editable) {
-                // Do nothing.
-            }
         })
+
+
     }
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()

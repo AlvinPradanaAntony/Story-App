@@ -10,11 +10,11 @@
         android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:visibility="gone"
         android:elevation="15dp"
-        tools:visibility="visible"
-        android:layout_centerInParent="true"/>
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,10 +25,10 @@
             android:id="@+id/txt_greeting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
             android:fontFamily="@font/nunito_sans_regular"
             android:text="@string/greetings"
             android:textSize="14sp"
-            android:layout_marginStart="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,20 +48,20 @@
             android:layout_height="24dp"
             android:layout_marginEnd="14dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/photoprofiles"
-            android:src="@drawable/ic_language"
             android:clickable="true"
+            android:contentDescription="@string/photoprofiles"
+            android:focusable="true"
+            android:src="@drawable/ic_language"
             app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="@+id/cardView"
-            android:focusable="true" />
+            app:layout_constraintTop_toTopOf="@+id/cardView" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="8dp"
             android:layout_marginEnd="18dp"
+            app:cardCornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -69,23 +69,30 @@
                 android:id="@+id/iv_photo"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
-                android:scaleType="centerCrop"
                 android:clickable="true"
-                android:src="@drawable/profiles"
+                android:contentDescription="@string/profile_button"
                 android:focusable="true"
-                android:contentDescription="@string/profile_button" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/profiles" />
         </androidx.cardview.widget.CardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_stories"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="18dp"
-            tools:listitem="@layout/item_row"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_username_account" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_username_account">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_stories"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                tools:listitem="@layout/item_row" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

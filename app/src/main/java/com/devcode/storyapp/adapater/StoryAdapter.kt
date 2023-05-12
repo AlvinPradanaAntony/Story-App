@@ -9,6 +9,8 @@ import com.bumptech.glide.Glide
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ItemRowBinding
 import com.devcode.storyapp.db.ListStoryItem
+import com.bumptech.glide.request.target.Target
+
 
 class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
@@ -40,8 +42,10 @@ class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : Recycler
     }
 
     private fun loadImage(url: String, imageView: ImageView, placeholder: Int) {
+        val maxHeight = 535 * imageView.resources.displayMetrics.density
         Glide.with(imageView.context)
             .load(url)
+            .override(Target.SIZE_ORIGINAL, maxHeight.toInt())
             .placeholder(placeholder)
             .error(placeholder)
             .into(imageView)

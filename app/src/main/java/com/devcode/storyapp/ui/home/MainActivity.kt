@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.setLanguage.setOnClickListener{
+        binding.setLanguage.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
         binding.ivPhoto.setOnClickListener {
@@ -101,6 +101,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.favButton.setOnClickListener {
             startActivity(Intent(this, AddStoryActivity::class.java))
+        }
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            stories(userToken)
+            binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 
