@@ -74,23 +74,23 @@ class RegisterActivity : AppCompatActivity() {
             if (fullName.isEmpty() && emailRegister.isEmpty() && passwordRegister.isEmpty()) {
                 AlertDialog.Builder(this).apply {
                     setTitle("Oops!")
-                    setMessage("Semua Inputan tidak boleh kosong")
+                    setMessage(R.string.email_n_password_empty)
                     setPositiveButton("OK") { _, _ -> }
                     create()
                     show()
                 }
             } else {
                 if (fullName.isEmpty()) {
-                    binding.edRegisterName.error = "Input FullName Cannot be Empty"
+                    binding.edRegisterName.error = resources.getString(R.string.full_name_empty)
                     binding.edRegisterName.requestFocus()
                 } else if (emailRegister.isEmpty()) {
-                    binding.edRegisterEmail.error = "Input Email Cannot be Empty"
+                    binding.edRegisterEmail.error = resources.getString(R.string.email_empty)
                     binding.edRegisterEmail.requestFocus()
                 } else if (passwordRegister.isEmpty()) {
-                    binding.edRegisterPassword.error = "Input Password Cannot be Empty"
+                    binding.edRegisterPassword.error = resources.getString(R.string.password_empty)
                     binding.edRegisterPassword.requestFocus()
                 } else if (confirmPasswordRegister.isEmpty()) {
-                    binding.edRegisterConfirmPass.error = "Input Confirm Pass Cannot be Empty"
+                    binding.edRegisterConfirmPass.error = resources.getString(R.string.password_confirmation_empty)
                     binding.edRegisterConfirmPass.requestFocus()
                 } else if (!isValidEmail(emailRegister)) {
                     binding.edRegisterEmail.error = resources.getString(R.string.email_invalid)
@@ -100,7 +100,7 @@ class RegisterActivity : AppCompatActivity() {
                         resources.getString(R.string.password_minimum_character)
                     binding.edRegisterPassword.requestFocus()
                 } else if (confirmPasswordRegister != passwordRegister) {
-                    binding.edRegisterConfirmPass.error = "Password Tidak Sama"
+                    binding.edRegisterConfirmPass.error = resources.getString(R.string.password_not_match)
                     binding.edRegisterConfirmPass.requestFocus()
                 } else {
                     binding.edRegisterName.clearFocus()
@@ -116,14 +116,16 @@ class RegisterActivity : AppCompatActivity() {
     private fun register(name:String, email: String, password: String) {
         registerViewModel.postRegister(name, email, password)
         registerViewModel.registerUser.observe(this) { user ->
-            AlertDialog.Builder(this@RegisterActivity).apply {
-                setTitle("Yeah!")
-                setMessage("Your account is created and ready to use. Login and see what other people is up to!")
-                setPositiveButton("Continue") { _, _ ->
-                    finish()
+            if (user != null) {
+                AlertDialog.Builder(this@RegisterActivity).apply {
+                    setTitle("Yeah!")
+                    setMessage(R.string.account_already_registered)
+                    setPositiveButton("Continue") { _, _ ->
+                        finish()
+                    }
+                    create()
+                    show()
                 }
-                create()
-                show()
             }
         }
     }

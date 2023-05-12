@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         customLogo()
         setupViewModel()
         observeLoading()
-        observeErrorMesage()
+        observeErrorMessage()
         setupAction()
         playAnimation()
     }
@@ -64,9 +64,7 @@ class LoginActivity : AppCompatActivity() {
         )[LoginViewModel::class.java]
         loginViewModel.getUser().observe(this) { user ->
             this.user = user
-            Log.d("CekTokenLogin", "Token: ${user.token}")
-            Log.d("CekTokenEmail", "Token: ${user.email}")
-            Log.d("CekNameLogin", "Name: ${user.name}")
+            Log.d("CekTokenLogin", "Token: ${user.token} - Email: ${user.email} - Name: ${user.name}")
         }
     }
 
@@ -81,24 +79,23 @@ class LoginActivity : AppCompatActivity() {
             if (email.isEmpty() && password.isEmpty()) {
                 AlertDialog.Builder(this).apply {
                     setTitle("Oops!")
-                    setMessage("Email dan password tidak boleh kosong")
+                    setMessage(R.string.email_n_password_empty)
                     setPositiveButton("OK") { _, _ -> }
                     create()
                     show()
                 }
             } else {
                 if (email.isEmpty()) {
-                    binding.edLoginEmail.error = "Input Email Cannot be Empty"
+                    binding.edLoginEmail.error = resources.getString(R.string.email_empty)
                     binding.edLoginEmail.requestFocus()
                 } else if (password.isEmpty()) {
-                    binding.edLoginPassword.error = "Input Password Cannot be Empty"
+                    binding.edLoginPassword.error = resources.getString(R.string.password_empty)
                     binding.edLoginPassword.requestFocus()
                 } else if (!isValidEmail(email)) {
                     binding.edLoginEmail.error = resources.getString(R.string.email_invalid)
                     binding.edLoginEmail.requestFocus()
                 } else if (password.length < 8) {
-                    binding.edLoginPassword.error =
-                        resources.getString(R.string.password_minimum_character)
+                    binding.edLoginPassword.error = resources.getString(R.string.password_minimum_character)
                     binding.edLoginPassword.requestFocus()
                 } else {
                     binding.edLoginEmail.clearFocus()
@@ -128,8 +125,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun hideKeyboard() {
-        val inputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
     }
 
@@ -148,7 +144,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeErrorMesage() {
+    private fun observeErrorMessage() {
         loginViewModel.isError.observe(this) {
             showSnackBar(it)
         }

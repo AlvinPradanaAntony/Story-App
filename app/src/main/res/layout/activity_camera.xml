@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:clickable="true"
-        android:contentDescription="@string/addstories"
+        android:contentDescription="@string/add_stories"
         android:focusable="true"
         android:src="@drawable/ic_baseline_camera_24"
         app:rippleColor="#8FFFFFFF"

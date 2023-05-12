@@ -3,9 +3,6 @@
     <string name="app_name">StoryApp</string>
     <string name="title_logo">StoryApp</string>
 
-    <string name="password_minimum_character">Kata Sandi Minimal 8 Karakter</string>
-    <string name="password_not_match">Password Tidak sama</string>
-    <string name="email_invalid">Format Email Tidak Sesuai</string>
     <string name="HeadlineLogin">Halo Disana!</string>
     <string name="CaptionLogin">Yuk waktunya buat jurnal perjalananmu! Ayo mulai sekarang!</string>
     <string name="hint_email">Email</string>
@@ -19,10 +16,21 @@
     <string name="confirm_password">Konfirmasi kata sandi</string>
     <string name="already_have_an_account">Anda sudah punya akun?\\u0020</string>
     <string name="submit">Submit</string>
+
+    <string name="email_empty">Email harus diisi</string>
+    <string name="password_empty">Password harus diisi</string>
+    <string name="password_confirmation_empty">Konfirmasi password harus diisi</string>
+    <string name="email_n_password_empty">Enail dan password tidak boleh kosong</string>
+    <string name="full_name_empty">Nama lengkap harus diisi</string>
+    <string name="email_invalid">Format Email Tidak Sesuai</string>
+    <string name="password_minimum_character">Kata Sandi Minimal 8 Karakter</string>
+    <string name="password_not_match">Password Tidak sama</string>
+    <string name="account_already_registered">Akun Anda sudah dibuat dan siap digunakan. Masuk dan lihat apa yang sedang dilakukan orang lain!</string>
+
     <string name="full_name">Nama Lengkap</string>
     <string name="greeting">Hi %1$s,</string>
-    <string name="addstories">tambahStories</string>
-    <string name="photoprofiles">fotoProfiles</string>
+    <string name="add_stories">tambahStories</string>
+    <string name="photo_profiles">fotoProfiles</string>
     <string name="username_account">Akun</string>
     <string name="image_preview">Pratinjau Gambar</string>
     <string name="camera">Kamera</string>
@@ -31,6 +39,7 @@
     <string name="upload">Unggah</string>
     <string name="greetings">Selamat Datang di StoryApp,</string>
     <string name="logout">Keluar</string>
+    <string name="gallery">Galeri</string>
     <string name="submit_as_guest">Submit as Guest</string>
     <string name="on">On</string>
     <string name="off">Off</string>
@@ -38,4 +47,13 @@
     <string name="logo_story_app">Logo StoryApp</string>
     <string name="abstract_1">Abstract 1</string>
     <string name="profile_button">Profile Button</string>
+
+    <string name="no_permission">Tidak mendapatkan perizinan</string>
+    <string name="not_empty">Kolom Gambar dan Description tidak boleh kosong</string>
+    <string name="taking_picture">Mengambil Gambar…</string>
+    <string name="failed_taking_pic">Gagal mengambil gambar…</string>
+    <string name="success_taking_pic">Berhasil mengambil gambar…</string>
+    <string name="failed_open_camera">Gagal memunculkan kamera…</string>
+    <string name="failed_uploading_pic">Gagal mengunggah gambar…</string>
+    <string name="text_to_share">Bagikan ke…</string>
 </resources>

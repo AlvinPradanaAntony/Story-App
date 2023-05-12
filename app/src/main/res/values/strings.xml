@@ -1,10 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">StoryApp</string>
     <string name="title_logo">StoryApp</string>
 
-    <string name="password_minimum_character">Password Must Be at Least 8 Characters</string>
-    <string name="password_not_match">Password entered is not the same</string>
-    <string name="email_invalid">Format Email is Invalid</string>
     <string name="HeadlineLogin">Hey There !</string>
     <string name="CaptionLogin">It’s time to make ur journey! Let’s get started now.</string>
     <string name="hint_email">Email</string>
@@ -18,10 +16,21 @@
     <string name="confirm_password">Confirm password</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="submit">Submit</string>
+
+    <string name="email_empty">Email Must Be Filled</string>
+    <string name="password_empty">Password Must Be Filled</string>
+    <string name="password_confirmation_empty">Password Confirmation Must Be Filled</string>
+    <string name="email_n_password_empty">Email and Password Must Be Filled</string>
+    <string name="full_name_empty">Full Name Must Be Filled</string>
+    <string name="email_invalid">Format Email is Invalid</string>
+    <string name="password_minimum_character">Password Must Be at Least 8 Characters</string>
+    <string name="password_not_match">Password entered is not the same</string>
+    <string name="account_already_registered">Your account is created and ready to use. Login and see what other people is up to!</string>
+
     <string name="full_name">Full Name</string>
     <string name="greeting">Hi %1$s,</string>
-    <string name="addstories">addStories</string>
-    <string name="photoprofiles">photoProfiles</string>
+    <string name="add_stories">addStories</string>
+    <string name="photo_profiles">photoProfiles</string>
     <string name="username_account">User</string>
     <string name="image_preview">Image Preview</string>
     <string name="camera">Camera</string>
@@ -39,4 +48,12 @@
     <string name="abstract_1">Abstract 1</string>
     <string name="profile_button">Profile Button</string>
 
+    <string name="no_permission">No Permission</string>
+    <string name="not_empty">Image and description field must not be empty</string>
+    <string name="taking_picture">Taking picture…</string>
+    <string name="failed_taking_pic">Failed to taking picture…</string>
+    <string name="success_taking_pic">Successfully take a picture…</string>
+    <string name="failed_open_camera">Failed to open camera…</string>
+    <string name="failed_uploading_pic">Failed to uploading…</string>
+    <string name="text_to_share">Share via…</string>
 </resources>

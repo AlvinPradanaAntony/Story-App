@@ -52,7 +52,7 @@ class AddStoryActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan permission.",
+                    R.string.no_permission,
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -78,7 +78,7 @@ class AddStoryActivity : AppCompatActivity() {
         }
         setupViewModel()
         observeLoading()
-        observeErrorMesage()
+        observeErrorMessage()
         switchUser(isCheck)
         binding.buttonCamera.setOnClickListener { startCameraX() }
         binding.buttonGallery.setOnClickListener { startGallery() }
@@ -88,7 +88,7 @@ class AddStoryActivity : AppCompatActivity() {
             if (description.isEmpty() && getFile == null) {
                 AlertDialog.Builder(this).apply {
                     setTitle("Oops!")
-                    setMessage("Gambar dan Description tidak boleh kosong")
+                    setMessage(R.string.not_empty)
                     setPositiveButton("OK") { _, _ -> }
                     create()
                     show()
@@ -189,7 +189,7 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeErrorMesage() {
+    private fun observeErrorMessage() {
         addStoryViewModel.isError.observe(this) {
             showSnackBar(it)
         }

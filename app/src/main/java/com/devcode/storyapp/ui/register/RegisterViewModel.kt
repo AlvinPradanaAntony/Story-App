@@ -4,12 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.devcode.storyapp.db.ApiConfig
 import com.devcode.storyapp.db.RegisterResponse
-import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,11 +51,5 @@ class RegisterViewModel(private val pref: UserPreferences) : ViewModel() {
                 Log.d("PostRegisterOnFailure", "onFailure: ${t.message.toString()}")
             }
         })
-    }
-
-    fun saveUser(user: UserModel) {
-        viewModelScope.launch {
-            pref.saveUser(user)
-        }
     }
 }

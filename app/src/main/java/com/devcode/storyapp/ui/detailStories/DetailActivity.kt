@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ActivityDetailBinding
 import com.devcode.storyapp.db.ListStoryItem
 
@@ -27,7 +28,7 @@ class DetailActivity : AppCompatActivity() {
             val story = intent.getParcelableExtra<ListStoryItem>(EXTRA_STATE) as ListStoryItem
             val textOnShare = story.photoUrl
             shareUser.putExtra(Intent.EXTRA_TEXT, textOnShare)
-            startActivity(Intent.createChooser(shareUser, "Share Via"))
+            startActivity(Intent.createChooser(shareUser, R.string.text_to_share.toString()))
         }
     }
 

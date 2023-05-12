@@ -11,6 +11,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.devcode.storyapp.R
 import com.devcode.storyapp.createFile
 import com.devcode.storyapp.databinding.ActivityCameraBinding
 import com.devcode.storyapp.ui.addStory.AddStoryActivity
@@ -46,7 +47,7 @@ class CameraActivity : AppCompatActivity() {
         val imageCapture = imageCapture ?: return
         val photoFile = createFile(application)
         showLoading(true)
-        Toast.makeText(this, "Mengambil gambar...", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.taking_picture, Toast.LENGTH_SHORT).show()
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
         imageCapture.takePicture(
             outputOptions,
@@ -56,7 +57,7 @@ class CameraActivity : AppCompatActivity() {
                     showLoading(false)
                     Toast.makeText(
                         this@CameraActivity,
-                        "Gagal mengambil gambar.",
+                        R.string.failed_taking_pic,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -65,7 +66,7 @@ class CameraActivity : AppCompatActivity() {
                     showLoading(false)
                     Toast.makeText(
                         this@CameraActivity,
-                        "Berhasil mengambil gambar.",
+                        R.string.success_taking_pic,
                         Toast.LENGTH_SHORT
                     ).show()
                     val intent = Intent()
@@ -104,7 +105,7 @@ class CameraActivity : AppCompatActivity() {
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraActivity,
-                    "Gagal memunculkan kamera.",
+                    R.string.failed_open_camera,
                     Toast.LENGTH_SHORT
                 ).show()
             }
