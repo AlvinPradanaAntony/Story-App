@@ -23,6 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="28dp"
             android:minHeight="318dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -31,7 +32,7 @@
                 android:layout_height="36dp"
                 android:src="@drawable/profiles"
                 android:layout_marginTop="12dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,9 +51,11 @@
             <ImageView
                 android:id="@+id/iv_item_photo"
                 android:layout_width="match_parent"
-                android:layout_height="195dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:maxHeight="545dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:src="@drawable/bg_post_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,14 +65,15 @@
                 android:id="@+id/tv_item_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="12dp"
-                android:fontFamily="@font/nunito_sans_regular"
-                android:text="@string/description"
-                android:maxLines="2"
                 android:ellipsize="end"
+                android:fontFamily="@font/nunito_sans_regular"
+                android:maxLines="2"
+                android:text="@string/description"
                 android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_item_photo" />

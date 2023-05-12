@@ -36,7 +36,7 @@
             android:id="@+id/txt_username_account"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/gilroy_extrabold"
+            android:fontFamily="@font/gilroy_extra_bold"
             android:text="@string/username_account"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="@+id/txt_greeting"
@@ -53,7 +53,8 @@
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="@+id/cardView"
             app:layout_constraintEnd_toStartOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="@+id/cardView" />
+            app:layout_constraintTop_toTopOf="@+id/cardView"
+            android:focusable="true" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -70,7 +71,9 @@
                 android:layout_height="42dp"
                 android:scaleType="centerCrop"
                 android:clickable="true"
-                android:src="@drawable/profiles" />
+                android:src="@drawable/profiles"
+                android:focusable="true"
+                android:contentDescription="@string/profile_button" />
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView

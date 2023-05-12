@@ -20,6 +20,9 @@ class AddStoryViewModel(private val pref: UserPreferences) : ViewModel() {
     private val _isAddStory = MutableLiveData<FileUploadResponse>()
     val isAddStory: LiveData<FileUploadResponse> = _isAddStory
 
+    private val _isAddStoryGuest = MutableLiveData<FileUploadResponse>()
+    val isAddStoryGuest: LiveData<FileUploadResponse> = _isAddStoryGuest
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -45,14 +48,45 @@ class AddStoryViewModel(private val pref: UserPreferences) : ViewModel() {
                     val responseError = response.errorBody()?.string()
                     val objErr = JSONObject(responseError.toString())
                     _isError.value = objErr.getString("message")?: response.message()
-                    Log.d("PostLoginOnResponse", "onResponse: ${response.message()}")
+                    Log.d("PostImageOnResponse", "onResponse: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
                 _isLoading.value = false
                 _isError.value = t.message
-                Log.d("PostLoginOnFailure", "onFailure: ${t.message.toString()}")
+                Log.d("PostImageOnResponse", "onFailure: ${t.message.toString()}")
+            }
+        })
+    }
+
+    fun postAddStoryGuest(imageMultipart: MultipartBody.Part, description: RequestBody) {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().uploadImageGuest(imageMultipart, description)
+        client.enqueue(object : Callback<FileUploadResponse> {
+            override fun onResponse(
+                call: Call<FileUploadResponse>,
+                response: Response<FileUploadResponse>
+            ) {
+                if (response.isSuccessful) {
+                    _isLoading.value = false
+                    val responseBody = response.body()
+                    if (responseBody != null && !responseBody.error) {
+                        _isAddStoryGuest.postValue(response.body())
+                    }
+                } else {
+                    _isLoading.value = false
+                    val responseError = response.errorBody()?.string()
+                    val objErr = JSONObject(responseError.toString())
+                    _isError.value = objErr.getString("message")?: response.message()
+                    Log.d("PostImageOnResponse", "onResponse: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
+                _isLoading.value = false
+                _isError.value = t.message
+                Log.d("PostImageOnResponse", "onFailure: ${t.message.toString()}")
             }
         })
     }

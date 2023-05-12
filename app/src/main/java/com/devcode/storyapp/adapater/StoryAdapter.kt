@@ -27,12 +27,15 @@ class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : Recycler
     override fun getItemCount() = listStories.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val name = listStories[position].name
-        val apiUrl = "https://ui-avatars.com/api/?name=$name&size=128&background=random"
-        holder.binding.tvItemName.text = name
-        holder.binding.tvItemDescription.text = listStories[position].description
-        loadImage(apiUrl, holder.binding.profileImage, R.drawable.ic_placeholder_photo)
-        loadImage(listStories[position].photoUrl, holder.binding.ivItemPhoto, R.drawable.bg_post_image)
+        val name = listStories[position].name.replaceFirstChar { it.uppercase() }
+        val apiUrlAvatar = "https://ui-avatars.com/api/?name=$name&size=128&background=random"
+        val apiPostImage = listStories[position].photoUrl
+        holder.binding.apply {
+            tvItemName.text = name
+            tvItemDescription.text = listStories[position].description
+            loadImage(apiUrlAvatar, profileImage, R.drawable.ic_placeholder_photo)
+            loadImage(apiPostImage, ivItemPhoto, R.drawable.bg_post_image)
+        }
         holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listStories[holder.adapterPosition]) }
     }
 

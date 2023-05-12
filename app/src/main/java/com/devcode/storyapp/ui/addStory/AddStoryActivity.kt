@@ -8,7 +8,9 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -37,6 +39,7 @@ class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddStoryBinding
     private lateinit var addStoryViewModel: AddStoryViewModel
     private lateinit var userToken: String
+    private  var isCheck: Boolean = false
     private var getFile: File? = null
 
     override fun onRequestPermissionsResult(
@@ -76,9 +79,10 @@ class AddStoryActivity : AppCompatActivity() {
         setupViewModel()
         observeLoading()
         observeErrorMesage()
+        switchUser(isCheck)
         binding.buttonCamera.setOnClickListener { startCameraX() }
         binding.buttonGallery.setOnClickListener { startGallery() }
-        binding.butonAdd.setOnClickListener {
+        binding.buttonAdd.setOnClickListener {
             val description = binding.edAddDescription.text?.trim().toString()
 
             if (description.isEmpty() && getFile == null) {
@@ -102,6 +106,14 @@ class AddStoryActivity : AppCompatActivity() {
         addStoryViewModel.getUser().observe(this) { user ->
             userToken = user.token
         }
+    }
+
+    private fun switchUser(isCheck: Boolean){
+          binding.switchUser.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
+                this.isCheck = isChecked != isCheck
+              Log.d("CheckingState", "onCreate: ${this.isCheck}")
+            }
+
     }
 
     private fun startCameraX() {
@@ -156,8 +168,14 @@ class AddStoryActivity : AppCompatActivity() {
                 file.name,
                 requestImageFile
             )
-            addStoryViewModel.postAddStory(userToken, imageMultipart, description)
-            addStoryViewModel.isAddStory.observe(this) {
+            val isAddStory = if (isCheck) {
+                addStoryViewModel.postAddStoryGuest(imageMultipart, description)
+                addStoryViewModel.isAddStoryGuest
+            } else {
+                addStoryViewModel.postAddStory(userToken, imageMultipart, description)
+                addStoryViewModel.isAddStory
+            }
+            isAddStory.observe(this) {
                 val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
                 startActivity(intent)
                 finishAffinity()
@@ -179,7 +197,7 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun showSnackBar(value: String) {
         Snackbar.make(
-            binding.butonAdd, value, Snackbar.LENGTH_SHORT
+            binding.buttonAdd, value, Snackbar.LENGTH_SHORT
         ).show()
     }
 
@@ -190,7 +208,6 @@ class AddStoryActivity : AppCompatActivity() {
 
     companion object {
         const val CAMERA_X_RESULT = 200
-
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }

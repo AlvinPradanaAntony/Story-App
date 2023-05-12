@@ -23,7 +23,7 @@
         android:elevation="14dp"
         android:visibility="gone"
         android:clickable="true"
-        tools:visibility="visible"
+        tools:visibility="invisible"
         android:focusable="true" />
 
     <ScrollView
@@ -53,7 +53,8 @@
                     android:layout_height="240dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_baseline_image_24" />
+                    android:src="@drawable/wallpaper"
+                    android:contentDescription="@string/image_preview" />
 
             </androidx.cardview.widget.CardView>
 
@@ -78,7 +79,8 @@
                     android:text="@string/camera"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    app:backgroundTint="@null" />
+                    app:backgroundTint="@null"
+                    style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
                     android:id="@+id/button_gallery"
@@ -89,7 +91,8 @@
                     android:text="@string/gallery"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    app:backgroundTint="@null" />
+                    app:backgroundTint="@null"
+                    style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
 
             <com.devcode.storyapp.ui.customView.CustomEditText
@@ -106,8 +109,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 tools:layout_editor_absoluteX="16dp" />
 
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_user"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/submit_as_guest"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textOff="@string/on"
+                android:textOn="@string/off"
+                app:layout_constraintEnd_toEndOf="@+id/ed_add_description"
+                app:layout_constraintStart_toStartOf="@+id/ed_add_description"
+                app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
+
             <Button
-                android:id="@+id/buton_add"
+                android:id="@+id/button_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="22dp"

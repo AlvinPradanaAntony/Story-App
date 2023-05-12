@@ -53,7 +53,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/logo1" />
+                    android:src="@drawable/logo1"
+                    android:contentDescription="@string/logo_story_app" />
             </FrameLayout>
 
             <TextView
@@ -87,7 +88,8 @@
                 android:layout_marginEnd="-100dp"
                 android:src="@drawable/abtract1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/abstract_1" />
 
             <com.devcode.storyapp.ui.customView.CustomEditText
                 android:id="@+id/ed_login_email"

@@ -33,7 +33,7 @@
                 android:id="@+id/username_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/gilroy_extrabold"
+                android:fontFamily="@font/gilroy_extra_bold"
                 android:text="@string/username_account"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 app:layout_constraintEnd_toEndOf="parent" />

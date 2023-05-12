@@ -31,5 +31,12 @@
     <string name="greetings">Welcome to StoryApp,</string>
     <string name="logout">Logout</string>
     <string name="gallery">Gallery</string>
+    <string name="submit_as_guest">Submit as Guest</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="logo_story_app">Logo StoryApp</string>
+    <string name="abstract_1">Abstract 1</string>
+    <string name="profile_button">Profile Button</string>
 
 </resources>
