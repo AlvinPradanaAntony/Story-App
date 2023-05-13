@@ -23,6 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.detailStories.DetailActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".ui.addStory.AddStoryActivity"
