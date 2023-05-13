@@ -84,9 +84,10 @@ class MainActivity : AppCompatActivity() {
         binding.rvStories.setHasFixedSize(true)
         binding.rvStories.adapter = adapter
         adapter.setOnItemClickCallback(object : StoryAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: ListStoryItem) {
+            override fun onItemClicked(data: ListStoryItem, photo: String) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra(DetailActivity.EXTRA_STATE, data)
+                intent.putExtra(DetailActivity.EXTRA_PHOTO, photo)
                 startActivity(intent)
             }
         })

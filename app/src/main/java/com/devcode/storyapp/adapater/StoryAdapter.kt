@@ -38,7 +38,7 @@ class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : Recycler
             loadImage(apiUrlAvatar, profileImage, R.drawable.ic_placeholder_photo)
             loadImage(apiPostImage, ivItemPhoto, R.drawable.bg_post_image)
         }
-        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listStories[holder.adapterPosition]) }
+        holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listStories[holder.adapterPosition], apiUrlAvatar) }
     }
 
     private fun loadImage(url: String, imageView: ImageView, placeholder: Int) {
@@ -59,6 +59,6 @@ class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : Recycler
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: ListStoryItem)
+        fun onItemClicked(data: ListStoryItem, photo: String)
     }
 }

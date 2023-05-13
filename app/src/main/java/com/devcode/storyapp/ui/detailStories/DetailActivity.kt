@@ -2,8 +2,10 @@ package com.devcode.storyapp.ui.detailStories
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ActivityDetailBinding
 import com.devcode.storyapp.db.ListStoryItem
@@ -34,11 +36,19 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupView() {
         val story = intent.getParcelableExtra<ListStoryItem>(EXTRA_STATE) as ListStoryItem
-        Glide.with(this)
-            .load(story.photoUrl)
-            .into(binding.ivDetailPhoto)
+        val photo = intent.getStringExtra(EXTRA_PHOTO).toString()
+        loadImage(photo, binding.ivPhotoProfile, R.drawable.ic_placeholder_photo)
+        loadImage(story.photoUrl, binding.ivDetailPhoto, R.drawable.ic_placeholder_photo)
         binding.tvDetailName.text = story.name
         binding.tvDetailDescription.text = story.description
+    }
+
+    private fun loadImage(url: String, imageView: ImageView, placeholder: Int) {
+        Glide.with(this)
+            .load(url)
+            .placeholder(placeholder)
+            .error(placeholder)
+            .into(imageView)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -48,5 +58,6 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_STATE = "extra_state"
+        const val EXTRA_PHOTO = "extra_photo"
     }
 }

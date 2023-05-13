@@ -1,80 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.detailStories.DetailActivity">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/iv_detail_photo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:background="#F2000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/wallpaper"
+        android:contentDescription="@string/image_preview" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_gradient_detail_page"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="66dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="720dp"
-            android:paddingHorizontal="16dp">
+            android:layout_marginBottom="12dp">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="18dp"
-                android:layout_marginTop="24dp"
-                app:cardCornerRadius="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_photo_profile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_placeholder_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/iv_detail_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="220dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/bg_post_image"
-                    android:contentDescription="@string/image_preview" />
-
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/tv_detail_name"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:layout_marginHorizontal="12dp"
-                android:fontFamily="@font/gilroy_extra_bold"
-                android:text="@string/username_account"
-                android:textSize="26sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/card_view" />
+                android:layout_marginStart="12dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_photo_profile"
+                app:layout_constraintStart_toEndOf="@+id/iv_photo_profile"
+                app:layout_constraintTop_toTopOf="@+id/iv_photo_profile">
 
-            <TextView
-                android:id="@+id/tv_detail_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/style_bg_edittext"
-                android:gravity="top"
-                android:hint="@string/description"
-                android:minHeight="80dp"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
+                <TextView
+                    android:id="@+id/tv_detail_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/username_account"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toEndOf="@+id/circleImageView" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_location"
+                    android:textColor="@color/textColorSecondary" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_detail_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/example_description"
+            android:textColor="@color/textColorSecondary" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_detail_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="28dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/style_button"
         android:text="@string/share"
         android:textSize="16sp"
@@ -84,4 +95,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
