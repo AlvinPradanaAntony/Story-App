@@ -59,4 +59,15 @@
     <string name="example_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras fermentum mi non facilisis cursus. Maecenas rhoncus ultrices imperdiet. Donec eget felis eros. Aenean lacus nisi, tincidunt quis lectus nec, malesuada dapibus ligula. Ut enim lacus, pharetra luctus placerat et, cursus sed arcu. Curabitur sodales vitae purus eget porta</string>
     <string name="location">Location</string>
     <string name="no_location">No location</string>
+
+    <string name="normal_type">Normal</string>
+    <string name="satellite_type">Satellite</string>
+    <string name="terrain_type">Terrain</string>
+    <string name="hybrid_type">Hybrid</string>
+    <string name="map_type">Map Type</string>
+    <string name="style_maps">Style Maps</string>
+    <string name="normal">Normal</string>
+    <string name="sattelite">Sattelite</string>
+    <string name="terrain">Terrain</string>
+    <string name="hybrid">Hybrid</string>
 </resources>

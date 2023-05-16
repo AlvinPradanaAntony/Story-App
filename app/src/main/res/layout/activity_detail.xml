@@ -13,13 +13,14 @@
         android:adjustViewBounds="true"
         android:background="#F2000000"
         android:scaleType="fitCenter"
-        android:src="@drawable/wallpaper"
+        android:src="@drawable/bg_post_image"
         android:contentDescription="@string/image_preview" />
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="440dp"
         android:background="@drawable/bg_gradient_detail_page"
-        />
+        app:layout_constraintBottom_toBottomOf="parent" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

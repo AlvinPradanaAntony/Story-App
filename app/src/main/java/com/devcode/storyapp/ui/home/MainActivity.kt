@@ -20,6 +20,7 @@ import com.devcode.storyapp.db.ListStoryItem
 import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.addStory.AddStoryActivity
 import com.devcode.storyapp.ui.detailStories.DetailActivity
+import com.devcode.storyapp.ui.mapList.MapListActivity
 import com.devcode.storyapp.ui.profile.ProfileActivity
 import com.google.android.material.snackbar.Snackbar
 
@@ -94,6 +95,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
+        binding.mapList.setOnClickListener {
+            startActivity(Intent(this, MapListActivity::class.java))
+        }
         binding.setLanguage.setOnClickListener {
             startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }

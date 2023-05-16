@@ -6,6 +6,9 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,6 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StoryApp"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBfvOGyTEOO14PRj5DwKtiY-FXIcQjMOms" />
+
+        <activity
+            android:name=".ui.mapList.MapListActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:exported="false" />
         <activity
             android:name=".ui.cameraActivity.CameraActivity"
             android:exported="false" />
@@ -23,8 +34,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.detailStories.DetailActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".ui.addStory.AddStoryActivity"
             android:exported="false" />

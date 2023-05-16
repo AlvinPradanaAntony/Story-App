@@ -43,6 +43,20 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_greeting" />
 
         <ImageButton
+            android:id="@+id/map_list"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="14dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/photo_profiles"
+            android:focusable="true"
+            android:src="@drawable/ic_baseline_map_24"
+            app:layout_constraintBottom_toBottomOf="@+id/set_language"
+            app:layout_constraintEnd_toStartOf="@+id/set_language"
+            app:layout_constraintTop_toTopOf="@+id/set_language" />
+
+        <ImageButton
             android:id="@+id/set_language"
             android:layout_width="24dp"
             android:layout_height="24dp"
