@@ -24,7 +24,7 @@
 
         <activity
             android:name=".ui.mapList.MapListActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/Theme.StoryApp.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".ui.cameraActivity.CameraActivity"

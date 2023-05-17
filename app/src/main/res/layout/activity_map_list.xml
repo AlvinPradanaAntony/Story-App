@@ -21,8 +21,8 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_gravity="top|end"
-        android:layout_marginTop="135dp"
-        android:layout_marginEnd="14dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="8dp"
         android:contentDescription="@string/style_maps"
         android:src="@drawable/ic_outline_layers_24"
         app:fabCustomSize="36dp"
@@ -37,5 +37,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
