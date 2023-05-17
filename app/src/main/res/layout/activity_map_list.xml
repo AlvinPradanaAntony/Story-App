@@ -16,6 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:layout_marginTop="-170dp"
+        android:rotation="180"
+        android:background="@drawable/bg_gradient_detail_page"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/style_map_button"
         android:layout_width="35dp"
