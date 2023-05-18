@@ -40,4 +40,20 @@ interface ApiService {
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
     ): Call<FileUploadResponse>
+
+    @GET("stories")
+    fun getLocationUsers(
+        @Header("Authorization") header: String,
+        @Query("location") location: Int,
+    ) : Call<StoryAPIResponse>
+
+    @Multipart
+    @POST("stories")
+    suspend fun uploadStoryWithLocation(
+        @Header("Authorization") header: String,
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody,
+        @Part("lat") latitudeUpload: RequestBody? = null,
+        @Part("lon") longitudeUpload: RequestBody? = null
+    ) : FileUploadResponse
 }

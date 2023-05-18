@@ -1,24 +1,27 @@
 package com.devcode.storyapp.ui.mapList
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.ColorInt
-import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.devcode.storyapp.R
+import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityMapListBinding
 import com.devcode.storyapp.databinding.BottomSheetBinding
+import com.devcode.storyapp.model.UserPreferences
+import com.devcode.storyapp.ui.home.MainViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,15 +32,19 @@ import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 import java.util.*
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapListBinding
     private lateinit var binding2: BottomSheetBinding
     private lateinit var mMap: GoogleMap
+    private lateinit var userToken: String
+    private lateinit var mapViewModel: MapViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupViewModel()
         setupView()
         setupAction()
 
@@ -45,6 +52,17 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(true)
         supportActionBar?.title = "Maps"
+    }
+
+    private fun setupViewModel() {
+        mapViewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreferences.getInstance(dataStore))
+        )[MapViewModel::class.java]
+
+        mapViewModel.getUser().observe(this) { user ->
+            userToken = user.token
+        }
     }
 
     private fun setupView() {
@@ -60,21 +78,16 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
             bottomSheetDialog.show()
 
             binding2.styleNormal.setOnClickListener {
-                Log.d("BottomSheetDialog", "style_normal diklik")
                 mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-                true
             }
             binding2.styleSatellite.setOnClickListener {
                 mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-                true
             }
             binding2.styleTerrain.setOnClickListener {
                 mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-                true
             }
             binding2.styleHybrid.setOnClickListener {
                 mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-                true
             }
         }
     }
@@ -88,8 +101,8 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isMapToolbarEnabled = true
 
         getMyLocation()
-/*        setMapStyle()*/
-        addManyMarker()
+        setMapStyle()
+        getLocationUser()
     }
 
     private val requestPermissionLauncher =
@@ -130,14 +143,16 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun setMapStyle() {
-        try {
-            val success =
-                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
-            if (!success) {
-                Log.e(TAG, "Style parsing failed.")
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+            try {
+                val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+                if (!success) {
+                    Log.e(TAG, "Style parsing failed.")
+                }
+            } catch (exception: Resources.NotFoundException) {
+                Log.e(TAG, "Can't find style. Error: ", exception)
             }
-        } catch (exception: Resources.NotFoundException) {
-            Log.e(TAG, "Can't find style. Error: ", exception)
         }
     }
 
@@ -148,28 +163,27 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
         val latitude: Double,
         val longitude: Double
     )
-    private fun addManyMarker() {
-        val tourismPlace = listOf(
-            TourismPlace("Rabbit Town", -6.8668408,107.608081),
-            TourismPlace("Alun-Alun Kota Bandung", -6.9218518,107.6025294),
-            TourismPlace("Orchid Forest Cikole", -6.780725, 107.637409),
-        )
-        tourismPlace.forEach { tourism ->
-            val latLng = LatLng(tourism.latitude, tourism.longitude)
-            val addressName = getAddressName(tourism.latitude, tourism.longitude)
-            mMap.addMarker(MarkerOptions().position(latLng).title(tourism.name).snippet(addressName))
-            boundsBuilder.include(latLng)
-        }
+    private fun getLocationUser() {
+        mapViewModel.postLocation(userToken)
+        mapViewModel.isLocationUser.observe(this) { data ->
+            data?.listStory?.forEach { listStoryItem ->
+                val name = listStoryItem.name
+                val latLng = LatLng(listStoryItem.lat, listStoryItem.lon)
+                val addressName = getAddressName(listStoryItem.lat, listStoryItem.lon)
+                mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(addressName))
+                boundsBuilder.include(latLng)
+            }
 
-        val bounds: LatLngBounds = boundsBuilder.build()
-        mMap.animateCamera(
-            CameraUpdateFactory.newLatLngBounds(
-                bounds,
-                resources.displayMetrics.widthPixels,
-                resources.displayMetrics.heightPixels,
-                300
+            val bounds: LatLngBounds = boundsBuilder.build()
+            mMap.animateCamera(
+                CameraUpdateFactory.newLatLngBounds(
+                    bounds,
+                    resources.displayMetrics.widthPixels,
+                    resources.displayMetrics.heightPixels,
+                    300
+                )
             )
-        )
+        }
     }
 
     private fun getAddressName(lat: Double, lon: Double): String? {
