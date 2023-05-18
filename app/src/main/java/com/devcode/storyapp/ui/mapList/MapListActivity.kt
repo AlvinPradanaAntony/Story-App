@@ -100,9 +100,16 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
 
+        defaultMarker()
+        getLocationUser()
         getMyLocation()
         setMapStyle()
-        getLocationUser()
+    }
+
+    private fun defaultMarker() {
+        val indonesia = LatLng(EXTRA_LATITUDE, EXTRA_LONGITUDE)
+        mMap.addMarker(MarkerOptions().position(indonesia).title("Indonesia"))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(indonesia, 4f))
     }
 
     private val requestPermissionLauncher =
@@ -158,31 +165,28 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     private val boundsBuilder = LatLngBounds.Builder()
-    data class TourismPlace(
-        val name: String,
-        val latitude: Double,
-        val longitude: Double
-    )
+
     private fun getLocationUser() {
         mapViewModel.postLocation(userToken)
         mapViewModel.isLocationUser.observe(this) { data ->
-            data?.listStory?.forEach { listStoryItem ->
-                val name = listStoryItem.name
-                val latLng = LatLng(listStoryItem.lat, listStoryItem.lon)
-                val addressName = getAddressName(listStoryItem.lat, listStoryItem.lon)
-                mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(addressName))
-                boundsBuilder.include(latLng)
+            try {
+                data?.listStory?.forEach { listStoryItem ->
+                    val name = listStoryItem.name
+                    val latLng = LatLng(listStoryItem.lat, listStoryItem.lon)
+                    val addressName = getAddressName(listStoryItem.lat, listStoryItem.lon)
+                    if (addressName != null) {
+                        mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(addressName))
+                        boundsBuilder.include(latLng)
+                    } else {
+                        val unknownAddress = "Alamat tidak ditemukan"
+                        mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(unknownAddress))
+                        boundsBuilder.include(latLng)
+                    }
+                }
+            } catch (e: Exception) {
+                Snackbar.make(binding.root, "Terjadi kesalahan: $e", Snackbar.LENGTH_LONG).show()
+                Log.e("LocationError", "getLocationUser: $e")
             }
-
-            val bounds: LatLngBounds = boundsBuilder.build()
-            mMap.animateCamera(
-                CameraUpdateFactory.newLatLngBounds(
-                    bounds,
-                    resources.displayMetrics.widthPixels,
-                    resources.displayMetrics.heightPixels,
-                    300
-                )
-            )
         }
     }
 
@@ -196,7 +200,7 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
                 Log.d(TAG, "getAddressName: $addressName")
             }
         } catch (e: IOException) {
-            e.printStackTrace()
+            Log.e("GetAddressName", "GetAddressName: $e")
         }
         return addressName
     }
@@ -208,5 +212,7 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
 
     companion object {
         private const val TAG = "MapsActivity"
+        private const val EXTRA_LATITUDE = -2.548926
+        private const val EXTRA_LONGITUDE = 118.0148634
     }
 }
