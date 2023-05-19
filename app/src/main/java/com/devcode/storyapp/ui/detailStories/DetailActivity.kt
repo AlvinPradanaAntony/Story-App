@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ActivityDetailBinding
-import com.devcode.storyapp.db.ListStoryItem
+import com.devcode.storyapp.remote.ListStoryItem
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding

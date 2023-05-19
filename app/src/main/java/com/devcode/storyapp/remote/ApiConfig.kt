@@ -1,4 +1,4 @@
-package com.devcode.storyapp.db
+package com.devcode.storyapp.remote
 
 import com.devcode.storyapp.BuildConfig
 import okhttp3.OkHttpClient

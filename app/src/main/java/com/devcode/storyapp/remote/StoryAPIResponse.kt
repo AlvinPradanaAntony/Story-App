@@ -1,4 +1,4 @@
-package com.devcode.storyapp.db
+package com.devcode.storyapp.remote
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

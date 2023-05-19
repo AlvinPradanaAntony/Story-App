@@ -5,8 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.devcode.storyapp.db.ApiConfig
-import com.devcode.storyapp.db.FileUploadResponse
+import com.devcode.storyapp.data.RepositoryStory
+import com.devcode.storyapp.remote.ApiConfig
+import com.devcode.storyapp.remote.FileUploadResponse
 import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
 import okhttp3.MultipartBody
@@ -16,83 +17,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddStoryViewModel(private val pref: UserPreferences) : ViewModel() {
-    private val _isAddStory = MutableLiveData<FileUploadResponse>()
-    val isAddStory: LiveData<FileUploadResponse> = _isAddStory
-
-    private val _isAddStoryGuest = MutableLiveData<FileUploadResponse>()
-    val isAddStoryGuest: LiveData<FileUploadResponse> = _isAddStoryGuest
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _isError = MutableLiveData<String>()
-    val isError: LiveData<String> = _isError
-
-    fun postAddStory(token: String, imageMultipart: MultipartBody.Part, description: RequestBody) {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().uploadImage("Bearer $token", imageMultipart, description)
-        client.enqueue(object : Callback<FileUploadResponse> {
-            override fun onResponse(
-                call: Call<FileUploadResponse>,
-                response: Response<FileUploadResponse>
-            ) {
-                if (response.isSuccessful) {
-                    _isLoading.value = false
-                    val responseBody = response.body()
-                    if (responseBody != null && !responseBody.error) {
-                        _isAddStory.postValue(response.body())
-                    }
-                } else {
-                    _isLoading.value = false
-                    val responseError = response.errorBody()?.string()
-                    val objErr = JSONObject(responseError.toString())
-                    _isError.value = objErr.getString("message")?: response.message()
-                    Log.d("PostImageOnResponse", "onResponse: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
-                _isLoading.value = false
-                _isError.value = t.message
-                Log.d("PostImageOnResponse", "onFailure: ${t.message.toString()}")
-            }
-        })
-    }
-
-    fun postAddStoryGuest(imageMultipart: MultipartBody.Part, description: RequestBody) {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().uploadImageGuest(imageMultipart, description)
-        client.enqueue(object : Callback<FileUploadResponse> {
-            override fun onResponse(
-                call: Call<FileUploadResponse>,
-                response: Response<FileUploadResponse>
-            ) {
-                if (response.isSuccessful) {
-                    _isLoading.value = false
-                    val responseBody = response.body()
-                    if (responseBody != null && !responseBody.error) {
-                        _isAddStoryGuest.postValue(response.body())
-                    }
-                } else {
-                    _isLoading.value = false
-                    val responseError = response.errorBody()?.string()
-                    val objErr = JSONObject(responseError.toString())
-                    _isError.value = objErr.getString("message")?: response.message()
-                    Log.d("PostImageOnResponse", "onResponse: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
-                _isLoading.value = false
-                _isError.value = t.message
-                Log.d("PostImageOnResponse", "onFailure: ${t.message.toString()}")
-            }
-        })
-    }
+class AddStoryViewModel(private val repository: RepositoryStory) : ViewModel() {
+    fun addStory(token: String, file: MultipartBody.Part, description: RequestBody, lat: Double?,
+                 lon: Double?) = repository.addStory(token, file, description, lat, lon)
 
     fun getUser(): LiveData<UserModel> {
-        return pref.getUser().asLiveData()
+        return repository.getUser()
     }
-
 }

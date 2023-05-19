@@ -5,8 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.devcode.storyapp.db.ApiConfig
-import com.devcode.storyapp.db.StoryAPIResponse
+import com.devcode.storyapp.data.RepositoryStory
+import com.devcode.storyapp.remote.ApiConfig
+import com.devcode.storyapp.remote.StoryAPIResponse
 import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
 import org.json.JSONObject
@@ -14,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MapViewModel(private val pref: UserPreferences) : ViewModel() {
+class MapViewModel(private val pref: RepositoryStory) : ViewModel() {
     private val _isLocationUser = MutableLiveData<StoryAPIResponse>()
     val isLocationUser: LiveData<StoryAPIResponse> = _isLocationUser
 
@@ -24,7 +25,7 @@ class MapViewModel(private val pref: UserPreferences) : ViewModel() {
     private val _isError = MutableLiveData<String>()
     val isError: LiveData<String> = _isError
 
-    fun postLocation(token: String) {
+/*    fun postLocation(token: String) {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getLocationUsers("Bearer $token", 1)
         client.enqueue(object : Callback<StoryAPIResponse> {
@@ -53,9 +54,6 @@ class MapViewModel(private val pref: UserPreferences) : ViewModel() {
                 Log.d("PostLoginOnFailure", "onFailure: ${t.message.toString()}")
             }
         })
-    }
+    }*/
 
-    fun getUser(): LiveData<UserModel> {
-        return pref.getUser().asLiveData()
-    }
 }

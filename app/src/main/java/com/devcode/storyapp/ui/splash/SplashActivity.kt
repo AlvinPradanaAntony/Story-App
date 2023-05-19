@@ -29,11 +29,12 @@ import com.devcode.storyapp.ui.home.MainViewModel
 import com.devcode.storyapp.ui.login.LoginActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
+
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private lateinit var mainViewModel: MainViewModel
-    private  var isLogin: Boolean = true
+    private var isLogin: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +46,9 @@ class SplashActivity : AppCompatActivity() {
         playAnimation()
         setupViewModel()
         Handler(Looper.getMainLooper()).postDelayed({
-            if (isLogin){
+            if (isLogin) {
                 startActivity(Intent(this, MainActivity::class.java))
-            } else{
+            } else {
                 startActivity(Intent(this, LoginActivity::class.java))
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -68,12 +69,18 @@ class SplashActivity : AppCompatActivity() {
         txtVersion.text = "v$myVersionName"
     }
 
-    private fun customSpanTitleLogo(){
+    private fun customSpanTitleLogo() {
         val txtLogo = binding.txtLogo
         val spannableString = SpannableString("StoryApp")
-        spannableString.setSpan(ForegroundColorSpan(Color.parseColor("#F79738")), 5, 8, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(
+            ForegroundColorSpan(Color.parseColor("#F79738")),
+            5,
+            8,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         txtLogo.text = spannableString
     }
+
     private fun playAnimation() {
         val alphaAnimation = AlphaAnimation(0f, 1f)
         alphaAnimation.duration = 1000
@@ -91,11 +98,10 @@ class SplashActivity : AppCompatActivity() {
             }.start()
         }, delayAnimation)
     }
+
     private fun setupViewModel() {
-        mainViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore))
-        )[MainViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
 
         mainViewModel.getUser().observe(this) { user ->
             if (!user.isLogin) {
@@ -103,7 +109,8 @@ class SplashActivity : AppCompatActivity() {
             }
         }
     }
-    companion object{
+
+    companion object {
         const val delaySplashScreen = 6000L
         const val delayAnimation = 2500L
     }

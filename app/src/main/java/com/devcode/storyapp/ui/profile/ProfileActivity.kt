@@ -1,25 +1,19 @@
 package com.devcode.storyapp.ui.profile
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.devcode.storyapp.R
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityProfileBinding
-import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.login.LoginActivity
-
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private lateinit var profileViewModel: ProfileViewModel
+    private lateinit var factory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +26,8 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        profileViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore))
-        )[ProfileViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(this)
+        profileViewModel = ViewModelProvider(this, factory)[ProfileViewModel::class.java]
 
         profileViewModel.getUser().observe(this) { user ->
             Glide.with(this)

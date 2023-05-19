@@ -12,25 +12,20 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.R
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityLoginBinding
 import com.devcode.storyapp.model.UserModel
-import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.home.MainActivity
 import com.devcode.storyapp.ui.register.RegisterActivity
+import com.devcode.storyapp.utils.Result
 import com.google.android.material.snackbar.Snackbar
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
-
 class LoginActivity : AppCompatActivity() {
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var user: UserModel
+    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var factory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +34,6 @@ class LoginActivity : AppCompatActivity() {
 
         customLogo()
         setupViewModel()
-        observeLoading()
-        observeErrorMessage()
         setupAction()
         playAnimation()
     }
@@ -58,14 +51,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        loginViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore))
-        )[LoginViewModel::class.java]
-        loginViewModel.getUser().observe(this) { user ->
-            this.user = user
-            Log.d("CekTokenLogin", "Token: ${user.token} - Email: ${user.email} - Name: ${user.name}")
-        }
+        factory = ViewModelFactory.getInstance(this)
+        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
     }
 
     private fun setupAction() {
@@ -108,15 +95,31 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(email: String, password: String) {
-        loginViewModel.postLogin(email, password)
-        loginViewModel.loginUser.observe(this) { user ->
-            val name = user.loginResult?.name.toString()
-            val token = user.loginResult?.token.toString()
-            loginViewModel.saveUser(UserModel(name, email, token, true))
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
+        showLoading(true)
+        loginViewModel.doingLogin(email, password).observe(this) { user ->
+            when (user) {
+                is Result.Success -> {
+                    showLoading(false)
+                    val response = user.data
+                    val name = response.loginResult?.name.toString()
+                    val token = response.loginResult?.token.toString()
+                    saveUserData(UserModel(name, email, token, true))
+                    Log.d("CekTokenLogin", "Token: $token - Email: $email - Name: $name")
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+                }
+                is Result.Loading -> showLoading(true)
+                is Result.Error -> {
+                    showSnackBar(user.error)
+                    showLoading(false)
+                }
+                else -> {
+                    showSnackBar("Something went wrong")
+                    showLoading(false)
+                }
+            }
         }
     }
 
@@ -138,21 +141,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeLoading() {
-        loginViewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
-    }
-
-    private fun observeErrorMessage() {
-        loginViewModel.isError.observe(this) {
-            showSnackBar(it)
-        }
+    private fun saveUserData(user: UserModel) {
+        loginViewModel.saveUser(user)
     }
 
     private fun showSnackBar(value: String) {
         Snackbar.make(
-            binding.buttonLogin, value, Snackbar.LENGTH_SHORT
+            binding.root, value, Snackbar.LENGTH_SHORT
         ).show()
     }
 

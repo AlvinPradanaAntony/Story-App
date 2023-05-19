@@ -1,4 +1,4 @@
-package com.devcode.storyapp.adapater
+package com.devcode.storyapp.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ItemRowBinding
-import com.devcode.storyapp.db.ListStoryItem
+import com.devcode.storyapp.remote.ListStoryItem
 
 
 class StoryAdapter(private val listStories: ArrayList<ListStoryItem>) : RecyclerView.Adapter<StoryAdapter.ViewHolder>() {

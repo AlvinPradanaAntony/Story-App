@@ -33,7 +33,7 @@ import java.io.IOException
 import java.util.*
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
-class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMapListBinding
     private lateinit var binding2: BottomSheetBinding
     private lateinit var mMap: GoogleMap
@@ -44,9 +44,9 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         binding = ActivityMapListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupViewModel()
+/*        setupViewModel()
         setupView()
-        setupAction()
+        setupAction()*/
 
         setSupportActionBar(binding.toolbarId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -54,7 +54,7 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
         supportActionBar?.title = "Maps"
     }
 
-    private fun setupViewModel() {
+/*    private fun setupViewModel() {
         mapViewModel = ViewModelProvider(
             this,
             ViewModelFactory(UserPreferences.getInstance(dataStore))
@@ -155,9 +155,11 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
             try {
                 val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
                 if (!success) {
+                    Snackbar.make(binding.root, "Style parsing failed", Snackbar.LENGTH_LONG).show()
                     Log.e(TAG, "Style parsing failed.")
                 }
             } catch (exception: Resources.NotFoundException) {
+                Snackbar.make(binding.root, "Can't find style. Error: ", Snackbar.LENGTH_LONG).show()
                 Log.e(TAG, "Can't find style. Error: ", exception)
             }
         }
@@ -214,5 +216,5 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
         private const val TAG = "MapsActivity"
         private const val EXTRA_LATITUDE = -2.548926
         private const val EXTRA_LONGITUDE = 118.0148634
-    }
+    }*/
 }

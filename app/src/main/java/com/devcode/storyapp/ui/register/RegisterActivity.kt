@@ -18,14 +18,19 @@ import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.R
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityRegisterBinding
+import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
+import com.devcode.storyapp.ui.home.MainActivity
 import com.devcode.storyapp.ui.login.LoginActivity
+import com.devcode.storyapp.ui.login.LoginViewModel
+import com.devcode.storyapp.utils.Result
 import com.google.android.material.snackbar.Snackbar
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var registerViewModel: RegisterViewModel
+    private lateinit var factory: ViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -33,17 +38,13 @@ class RegisterActivity : AppCompatActivity() {
 
         customLogo()
         setupViewModel()
-        observeLoading()
-        observeErrorMesage()
         setupAction()
         playAnimation()
     }
 
     private fun setupViewModel() {
-        registerViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore))
-        )[RegisterViewModel::class.java]
+        factory = ViewModelFactory.getInstance(this)
+        registerViewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
     }
 
     private fun playAnimation(){
@@ -114,17 +115,29 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register(name:String, email: String, password: String) {
-        registerViewModel.postRegister(name, email, password)
-        registerViewModel.registerUser.observe(this) { user ->
-            if (user != null) {
-                AlertDialog.Builder(this@RegisterActivity).apply {
-                    setTitle("Yeah!")
-                    setMessage(R.string.account_already_registered)
-                    setPositiveButton("Continue") { _, _ ->
-                        finish()
+        showLoading(true)
+        registerViewModel.doingRegister(name, email, password).observe(this) { user ->
+            when (user) {
+                is Result.Success -> {
+                    showLoading(false)
+                    AlertDialog.Builder(this@RegisterActivity).apply {
+                        setTitle("Yeah!")
+                        setMessage(R.string.account_already_registered)
+                        setPositiveButton("Continue") { _, _ ->
+                            finish()
+                        }
+                        create()
+                        show()
                     }
-                    create()
-                    show()
+                }
+                is Result.Loading -> showLoading(true)
+                is Result.Error -> {
+                    showSnackBar(user.error)
+                    showLoading(false)
+                }
+                else -> {
+                    showSnackBar("Something went wrong")
+                    showLoading(false)
                 }
             }
         }
@@ -133,18 +146,6 @@ class RegisterActivity : AppCompatActivity() {
     private fun hideKeyboard() {
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(binding.root.windowToken, 0)
-    }
-
-    private fun observeLoading() {
-        registerViewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
-    }
-
-    private fun observeErrorMesage() {
-        registerViewModel.isError.observe(this) {
-            showSnackBar(it)
-        }
     }
 
     private fun isValidEmail(email: String): Boolean {
