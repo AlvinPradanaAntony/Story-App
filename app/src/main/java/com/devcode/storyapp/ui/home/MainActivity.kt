@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var factory: ViewModelFactory
     private lateinit var adapter: PagingStoryAdapter
+    private var currentScrollPosition: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +61,10 @@ class MainActivity : AppCompatActivity() {
         binding.rvStories.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter { adapter.retry() }
         )
+        currentScrollPosition = (binding.rvStories.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
         mainViewModel.getStory().observe(this){
             adapter.submitData(lifecycle, it)
+            binding.rvStories.scrollToPosition(0)
         }
     }
     override fun onResume() {
@@ -88,15 +91,5 @@ class MainActivity : AppCompatActivity() {
             getStories()
             binding.swipeRefreshLayout.isRefreshing = false
         }
-    }
-
-
-
-    private fun showSnackBar(value: String) {
-        Snackbar.make(binding.root, value, Snackbar.LENGTH_SHORT).show()
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

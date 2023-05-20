@@ -50,6 +50,7 @@
 
     <string name="no_permission">Tidak mendapatkan perizinan</string>
     <string name="not_empty">Kolom Gambar dan Description tidak boleh kosong</string>
+    <string name="choose_image">Pilih gambar</string>
     <string name="taking_picture">Mengambil Gambar…</string>
     <string name="failed_taking_pic">Gagal mengambil gambar…</string>
     <string name="success_taking_pic">Berhasil mengambil gambar…</string>
@@ -59,6 +60,9 @@
     <string name="example_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras fermentum mi non facilisis cursus. Maecenas rhoncus ultrices imperdiet. Donec eget felis eros. Aenean lacus nisi, tincidunt quis lectus nec, malesuada dapibus ligula. Ut enim lacus, pharetra luctus placerat et, cursus sed arcu. Curabitur sodales vitae purus eget porta</string>
     <string name="location">Location</string>
     <string name="no_location">No location</string>
+    <string name="upload_success">Sukses Upload</string>
+    <string name="upload_failed">Gagal Upload</string>
+    <string name="must_filled">Harus diisi</string>
 
     <string name="normal_type">Normal</string>
     <string name="satellite_type">Satellite</string>

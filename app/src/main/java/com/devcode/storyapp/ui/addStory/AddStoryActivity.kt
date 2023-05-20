@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.location.Geocoder
 import android.location.Location
 import android.net.Uri
 import android.os.Build
@@ -22,6 +23,7 @@ import com.devcode.storyapp.*
 import com.devcode.storyapp.databinding.ActivityAddStoryBinding
 import com.devcode.storyapp.ui.cameraActivity.CameraActivity
 import com.devcode.storyapp.ui.home.MainActivity
+import com.devcode.storyapp.ui.mapList.MapListActivity
 import com.devcode.storyapp.utils.Result
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -32,6 +34,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.IOException
+import java.util.*
 
 
 class AddStoryActivity : AppCompatActivity() {
@@ -40,7 +44,8 @@ class AddStoryActivity : AppCompatActivity() {
     private lateinit var userToken: String
     private lateinit var factory: ViewModelFactory
     private lateinit var fusedLocation: FusedLocationProviderClient
-    private var isCheck: Boolean = false
+    private var isCheckSwitchGuest: Boolean = false
+    private var isCheckSwitchLoc: Boolean = false
     private var getFile: File? = null
     private var location: Location? = null
     private var lat: Double? = null
@@ -56,7 +61,7 @@ class AddStoryActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan permission.",
+                    R.string.no_permission,
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -82,7 +87,7 @@ class AddStoryActivity : AppCompatActivity() {
         }
 
         setupViewModel()
-        switchUser(isCheck)
+        switchUser(isCheckSwitchGuest, isCheckSwitchLoc)
         setupAction()
     }
 
@@ -94,15 +99,20 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun switchUser(isCheck: Boolean){
+    private fun switchUser(isCheckSwitchGuest: Boolean, isCheckSwitchLoc: Boolean) {
         binding.apply {
             switchUser.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
-                this@AddStoryActivity.isCheck = isChecked != isCheck
-                Log.d("CheckingState", "onCreate: ${this@AddStoryActivity}")
+                this@AddStoryActivity.isCheckSwitchGuest = isChecked != isCheckSwitchGuest
+                if (this@AddStoryActivity.isCheckSwitchGuest){
+                    Toast.makeText(this@AddStoryActivity, "Now, you as guest", Toast.LENGTH_SHORT).show()
+                }
             }
             switchLocation.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
-                this@AddStoryActivity.isCheck = isChecked != isCheck
-                Log.d("CheckingState", "onCreate: ${this@AddStoryActivity}")
+                this@AddStoryActivity.isCheckSwitchLoc = isChecked != isCheckSwitchLoc
+                if (this@AddStoryActivity.isCheckSwitchLoc){
+                    Log.d("TAG", "switchUser: $isCheckSwitchLoc")
+                    getMyLocation()
+                }
             }
         }
     }
@@ -115,13 +125,17 @@ class AddStoryActivity : AppCompatActivity() {
             if (description.isEmpty() && getFile == null) {
                 AlertDialog.Builder(this).apply {
                     setTitle("Oops!")
-                    setMessage("Gambar dan Description tidak boleh kosong")
+                    setMessage(R.string.not_empty)
                     setPositiveButton("OK") { _, _ -> }
                     create()
                     show()
                 }
+            } else if (description.isEmpty()){
+                binding.edAddDescription.error = resources.getString(R.string.must_filled)
+                binding.edAddDescription.requestFocus()
+            } else {
+                uploadImage()
             }
-            uploadImage()
         }
     }
 
@@ -135,9 +149,10 @@ class AddStoryActivity : AppCompatActivity() {
                 if (location != null) {
                     lat = location.latitude
                     lon = location.longitude
+                    val addressName = getAddressName(lat!!, lon!!)
                     Snackbar.make(
                         binding.root,
-                        "Your Location is - \nLat: $lat\nLong: $lon",
+                        addressName.toString(),
                         Snackbar.LENGTH_LONG
                     ).show()
                 } else {
@@ -175,7 +190,7 @@ class AddStoryActivity : AppCompatActivity() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        val chooser = Intent.createChooser(intent, resources.getString(R.string.choose_image))
         launcherIntentGallery.launch(chooser)
     }
 
@@ -220,26 +235,44 @@ class AddStoryActivity : AppCompatActivity() {
                 requestImageFile
             )
             val token = "Bearer $userToken"
-            addStoryViewModel.addStory(token, imageMultipart, description, lat, lon).observe(this) {
+            val isAddStory = if (isCheckSwitchGuest) {
+                addStoryViewModel.addStoryAsGuest(imageMultipart, description, lat, lon)
+            } else {
+                addStoryViewModel.addStory(token, imageMultipart, description, lat, lon)
+            }
+            isAddStory.observe(this) {
                 when (it) {
                     is Result.Success -> {
                         showLoading(false)
                         startActivity(Intent(this, MainActivity::class.java))
-                        Toast.makeText(this, "Upload Succes", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.upload_success, Toast.LENGTH_SHORT).show()
                         finish()
                     }
                     is Result.Loading -> {
                         showLoading(true)
-                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                     is Result.Error -> {
                         showLoading(false)
-                        Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
-                        Toast.makeText(this, "Upload Failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "${R.string.upload_failed}: "+it.error, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
+    }
+
+    private fun getAddressName(lat: Double, lon: Double): String? {
+        var addressName: String? = null
+        val geocoder = Geocoder(this@AddStoryActivity, Locale.getDefault())
+        try {
+            val list = geocoder.getFromLocation(lat, lon, 1)
+            if (list != null && list.size != 0) {
+                addressName = list[0].getAddressLine(0)
+                Log.d("AddressName", "getAddressName: $addressName")
+            }
+        } catch (e: IOException) {
+            Log.e("AddressName", "GetAddressName: $e")
+        }
+        return addressName
     }
 
     private fun showLoading(isLoading: Boolean) {

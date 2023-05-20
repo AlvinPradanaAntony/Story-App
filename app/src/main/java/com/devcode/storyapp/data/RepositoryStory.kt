@@ -75,6 +75,16 @@ class RepositoryStory(private val storyDatabase: StoryDatabase,  private val api
         }
     }
 
+    fun addStoryAsGuest(imageMultipart: MultipartBody.Part, description: RequestBody, lat: Double?, lon: Double?): LiveData<Result<FileUploadResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.uploadStoryAsGuest(imageMultipart, description,lat, lon)
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
     fun getLocationUser(token: String): LiveData<Result<StoryAPIResponse>> = liveData {
         emit(Result.Loading)
         try {

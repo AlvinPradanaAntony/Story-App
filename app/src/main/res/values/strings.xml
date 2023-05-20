@@ -50,6 +50,7 @@
 
     <string name="no_permission">No Permission</string>
     <string name="not_empty">Image and description field must not be empty</string>
+    <string name="choose_image">Choose a Picture</string>
     <string name="taking_picture">Taking picture…</string>
     <string name="failed_taking_pic">Failed to taking picture…</string>
     <string name="success_taking_pic">Successfully take a picture…</string>
@@ -59,6 +60,9 @@
     <string name="example_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras fermentum mi non facilisis cursus. Maecenas rhoncus ultrices imperdiet. Donec eget felis eros. Aenean lacus nisi, tincidunt quis lectus nec, malesuada dapibus ligula. Ut enim lacus, pharetra luctus placerat et, cursus sed arcu. Curabitur sodales vitae purus eget porta</string>
     <string name="location">Location</string>
     <string name="no_location">No location</string>
+    <string name="upload_success">Upload Success</string>
+    <string name="upload_failed">Upload Failed</string>
+    <string name="must_filled">Must be filled</string>
 
     <string name="normal_type">Normal</string>
     <string name="satellite_type">Satellite</string>

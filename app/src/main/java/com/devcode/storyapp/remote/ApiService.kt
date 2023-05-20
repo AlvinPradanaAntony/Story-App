@@ -29,24 +29,6 @@ interface ApiService {
         @Query("location") location: Int? = null
     ): StoryAPIResponse
 
-    @GET("stories/{id}")
-    suspend fun getDetailStory(
-        @Path("id") id: String
-    ) : DetailStoryResponse
-
-    @GET("stories")
-    suspend fun getStories(
-        @Header("Authorization") header: String
-    ): StoryAPIResponse
-
-    @Multipart
-    @POST("stories")
-    suspend fun uploadImage(
-        @Header("Authorization") header: String,
-        @Part file: MultipartBody.Part,
-        @Part("description") description: RequestBody,
-    ): FileUploadResponse
-
     @Multipart
     @POST("stories")
     suspend fun uploadStory(
@@ -59,31 +41,16 @@ interface ApiService {
 
     @Multipart
     @POST("/v1/stories/guest")
-    suspend fun uploadImageGuest(
+    suspend fun uploadStoryAsGuest(
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
-    ): Call<FileUploadResponse>
+        @Part("lat") lat: Double?,
+        @Part("lon") lon: Double?
+    ): FileUploadResponse
 
     @GET("stories")
     suspend fun getLocationUsers(
         @Header("Authorization") header: String,
         @Query("location") location: Int,
     ): StoryAPIResponse
-
-    @GET("stories")
-    suspend fun getListStoryWithPaging(
-        @Header("Authorization") header: String,
-        @Query("page") page: Int,
-        @Query("size") size: Int,
-    ): StoryAPIResponse
-
-    @Multipart
-    @POST("stories")
-    suspend fun uploadStoryWithLocation(
-        @Header("Authorization") header: String,
-        @Part file: MultipartBody.Part,
-        @Part("description") description: RequestBody,
-        @Part("lat") latitudeUpload: RequestBody? = null,
-        @Part("lon") longitudeUpload: RequestBody? = null
-    ): FileUploadResponse
 }
