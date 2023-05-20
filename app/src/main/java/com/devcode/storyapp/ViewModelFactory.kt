@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.data.RepositoryStory
 import com.devcode.storyapp.di.Injection
-import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.addStory.AddStoryViewModel
 import com.devcode.storyapp.ui.home.MainViewModel
 import com.devcode.storyapp.ui.login.LoginViewModel

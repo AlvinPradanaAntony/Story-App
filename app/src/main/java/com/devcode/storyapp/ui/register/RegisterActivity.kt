@@ -11,18 +11,11 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.R
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityRegisterBinding
-import com.devcode.storyapp.model.UserModel
-import com.devcode.storyapp.model.UserPreferences
-import com.devcode.storyapp.ui.home.MainActivity
 import com.devcode.storyapp.ui.login.LoginActivity
-import com.devcode.storyapp.ui.login.LoginViewModel
 import com.devcode.storyapp.utils.Result
 import com.google.android.material.snackbar.Snackbar
 

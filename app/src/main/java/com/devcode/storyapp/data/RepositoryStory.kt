@@ -9,12 +9,11 @@ import com.devcode.storyapp.db.StoryResponseRoom
 import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.remote.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.lang.Exception
 import com.devcode.storyapp.utils.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
 
 class RepositoryStory(private val storyDatabase: StoryDatabase,  private val apiService: ApiService, private val pref: UserPreferences,) {

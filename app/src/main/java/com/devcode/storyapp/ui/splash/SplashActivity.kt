@@ -23,7 +23,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivitySplashBinding
-import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.ui.home.MainActivity
 import com.devcode.storyapp.ui.home.MainViewModel
 import com.devcode.storyapp.ui.login.LoginActivity

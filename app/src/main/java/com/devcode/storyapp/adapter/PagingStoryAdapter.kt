@@ -12,7 +12,6 @@ import com.bumptech.glide.request.target.Target
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ItemRowBinding
 import com.devcode.storyapp.db.StoryResponseRoom
-import com.devcode.storyapp.remote.ListStoryItem
 import com.devcode.storyapp.ui.detailStories.DetailActivity
 
 class PagingStoryAdapter : PagingDataAdapter<StoryResponseRoom, PagingStoryAdapter.ViewHolder>(DIFF_CALLBACK) {

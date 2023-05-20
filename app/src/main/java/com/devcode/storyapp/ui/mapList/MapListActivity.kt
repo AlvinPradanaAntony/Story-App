@@ -6,47 +6,49 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.location.Geocoder
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.devcode.storyapp.R
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityMapListBinding
 import com.devcode.storyapp.databinding.BottomSheetBinding
-import com.devcode.storyapp.model.UserPreferences
-import com.devcode.storyapp.ui.home.MainViewModel
+import com.devcode.storyapp.utils.Result
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 import java.util.*
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
-class MapListActivity : AppCompatActivity() {
+class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapListBinding
     private lateinit var binding2: BottomSheetBinding
     private lateinit var mMap: GoogleMap
     private lateinit var userToken: String
     private lateinit var mapViewModel: MapViewModel
+    private lateinit var factory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMapListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-/*        setupViewModel()
+        setupViewModel()
         setupView()
-        setupAction()*/
+        setupAction()
 
         setSupportActionBar(binding.toolbarId)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -54,14 +56,11 @@ class MapListActivity : AppCompatActivity() {
         supportActionBar?.title = "Maps"
     }
 
-/*    private fun setupViewModel() {
-        mapViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore))
-        )[MapViewModel::class.java]
-
-        mapViewModel.getUser().observe(this) { user ->
-            userToken = user.token
+    private fun setupViewModel() {
+        factory = ViewModelFactory.getInstance(this)
+        mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
+        mapViewModel.getUser().observe(this) {
+            userToken = it.token
         }
     }
 
@@ -169,7 +168,31 @@ class MapListActivity : AppCompatActivity() {
     private val boundsBuilder = LatLngBounds.Builder()
 
     private fun getLocationUser() {
-        mapViewModel.postLocation(userToken)
+        val token = "Bearer $userToken"
+        mapViewModel.getStoryLocation(token).observe(this) {
+            when (it) {
+                is Result.Loading -> {}
+                is Result.Success -> {
+                   it.data.listStory?.forEach{ listStoryItem ->
+                       val name = listStoryItem.name
+                       val latLng = LatLng(listStoryItem.lat, listStoryItem.lon)
+                       val addressName = getAddressName(listStoryItem.lat, listStoryItem.lon)
+                       if (addressName != null) {
+                           mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(addressName))
+                           boundsBuilder.include(latLng)
+                       } else {
+                           val unknownAddress = "Alamat tidak ditemukan"
+                           mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(unknownAddress))
+                           boundsBuilder.include(latLng)
+                       }
+                   }
+                }
+                is Result.Error -> {
+                    Snackbar.make(binding.root, "Terjadi kesalahan: ${it.error}", Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
+       /* mapViewModel.postLocation(userToken)
         mapViewModel.isLocationUser.observe(this) { data ->
             try {
                 data?.listStory?.forEach { listStoryItem ->
@@ -189,7 +212,7 @@ class MapListActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, "Terjadi kesalahan: $e", Snackbar.LENGTH_LONG).show()
                 Log.e("LocationError", "getLocationUser: $e")
             }
-        }
+        }*/
     }
 
     private fun getAddressName(lat: Double, lon: Double): String? {
@@ -216,5 +239,5 @@ class MapListActivity : AppCompatActivity() {
         private const val TAG = "MapsActivity"
         private const val EXTRA_LATITUDE = -2.548926
         private const val EXTRA_LONGITUDE = 118.0148634
-    }*/
+    }
 }

@@ -32,10 +32,10 @@ data class ListStoryItem(
     val createdAt: String,
 
     @field:SerializedName("lat")
-    val lat: Double? = null,
+    val lat: Double,
 
     @field:SerializedName("lon")
-    val lon: Double? = null
+    val lon: Double
 ) : Parcelable
 
 data class RegisterResponse(
@@ -106,8 +106,8 @@ data class Story(
     val createdAt: String,
 
     @field:SerializedName("lat")
-    val lat: Double? = null,
+    val lat: Double,
 
     @field:SerializedName("lon")
-    val lon: Double? = null
+    val lon: Double
 )
