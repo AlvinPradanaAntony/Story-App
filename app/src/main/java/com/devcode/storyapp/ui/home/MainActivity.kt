@@ -29,9 +29,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.rvStories.layoutManager = LinearLayoutManager(this)
+        adapter = PagingStoryAdapter()
+
         setupViewModel()
-        setRecycleView()
-        stories()
+        getStories()
         setupAction()
     }
 
@@ -50,18 +52,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun stories() {
+    private fun getStories() {
         binding.rvStories.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter { adapter.retry() }
         )
         mainViewModel.getStory().observe(this){
             adapter.submitData(lifecycle, it)
-            setRecycleView()
         }
     }
     override fun onResume() {
         super.onResume()
-        stories()
+        getStories()
     }
 
     private fun setRecycleView() {
@@ -85,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddStoryActivity::class.java))
         }
         binding.swipeRefreshLayout.setOnRefreshListener {
-            stories()
+            getStories()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }

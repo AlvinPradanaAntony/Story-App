@@ -12,7 +12,7 @@ data class StoryAPIResponse(
     val message: String,
 
     @field:SerializedName("listStory")
-    val listStory: ArrayList<ListStoryItem>
+    val listStory: ArrayList<ListStoryItem>?
 )
 @Parcelize
 data class ListStoryItem(
@@ -29,13 +29,13 @@ data class ListStoryItem(
     val description: String,
 
     @field:SerializedName("lon")
-    val lon: Double,
+    val lon: Double? = null,
 
     @field:SerializedName("id")
     val id: String,
 
     @field:SerializedName("lat")
-    val lat: Double
+    val lat: Double? = null
 ) : Parcelable
 
 data class RegisterResponse(
@@ -74,4 +74,41 @@ data class FileUploadResponse(
 
     @field:SerializedName("message")
     val message: String
+)
+
+
+data class DetailStoryResponse(
+
+    @field:SerializedName("error")
+    val error: Boolean,
+
+    @field:SerializedName("message")
+    val message: String,
+
+    @field:SerializedName("story")
+    val story: Story
+)
+
+data class Story(
+
+    @field:SerializedName("photoUrl")
+    val photoUrl: String,
+
+    @field:SerializedName("createdAt")
+    val createdAt: String,
+
+    @field:SerializedName("name")
+    val name: String,
+
+    @field:SerializedName("description")
+    val description: String,
+
+    @field:SerializedName("lon")
+    val lon: Any,
+
+    @field:SerializedName("id")
+    val id: String,
+
+    @field:SerializedName("lat")
+    val lat: Any
 )

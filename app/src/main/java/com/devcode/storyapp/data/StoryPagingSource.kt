@@ -13,7 +13,7 @@ class StoryPagingSource(private val apiService: ApiService,  private val pref: U
         return try {
             val page = params.key ?: INITIAL_PAGE_INDEX
             val token = pref.getUser().first().token
-            val responseData = apiService.getListStoryWithPaging("Bearer $token",page, params.loadSize).listStory
+            val responseData = apiService.getListStoryWithPaging("Bearer $token",page, params.loadSize).listStory?: emptyList()
 
             LoadResult.Page(
                 data = responseData,

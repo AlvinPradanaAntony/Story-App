@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ActivityDetailBinding
+import com.devcode.storyapp.db.StoryResponseRoom
 import com.devcode.storyapp.remote.ListStoryItem
 
 class DetailActivity : AppCompatActivity() {
@@ -36,7 +37,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        val story = intent.getParcelableExtra<ListStoryItem>(EXTRA_STATE) as ListStoryItem
+        val story = intent.getParcelableExtra<StoryResponseRoom>(EXTRA_STATE) as StoryResponseRoom
         val photo = intent.getStringExtra(EXTRA_PHOTO).toString()
         loadImage(photo, binding.ivPhotoProfile, R.drawable.ic_placeholder_photo)
         loadImage(story.photoUrl, binding.ivDetailPhoto, R.drawable.ic_placeholder_photo)

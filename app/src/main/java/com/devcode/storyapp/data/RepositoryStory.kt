@@ -3,10 +3,9 @@ package com.devcode.storyapp.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.liveData
+import androidx.paging.*
+import com.devcode.storyapp.db.StoryDatabase
+import com.devcode.storyapp.db.StoryResponseRoom
 import com.devcode.storyapp.model.UserModel
 import com.devcode.storyapp.model.UserPreferences
 import com.devcode.storyapp.remote.*
@@ -18,14 +17,18 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import retrofit2.HttpException
 
-class RepositoryStory(private val pref: UserPreferences, private val apiService: ApiService) {
-    fun getStory(): LiveData<PagingData<ListStoryItem>> {
+class RepositoryStory(private val storyDatabase: StoryDatabase,  private val apiService: ApiService, private val pref: UserPreferences,) {
+
+    fun getStory(): LiveData<PagingData<StoryResponseRoom>> {
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
                 pageSize = 5
             ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService, pref),
             pagingSourceFactory = {
-                StoryPagingSource(apiService, pref)
+                storyDatabase.storyDao().getAllStory()
+                /*StoryPagingSource(apiService, pref)*/
             }
         ).liveData
     }

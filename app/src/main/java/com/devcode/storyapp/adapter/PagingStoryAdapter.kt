@@ -11,10 +11,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.devcode.storyapp.R
 import com.devcode.storyapp.databinding.ItemRowBinding
+import com.devcode.storyapp.db.StoryResponseRoom
 import com.devcode.storyapp.remote.ListStoryItem
 import com.devcode.storyapp.ui.detailStories.DetailActivity
 
-class PagingStoryAdapter : PagingDataAdapter<ListStoryItem, PagingStoryAdapter.ViewHolder>(DIFF_CALLBACK) {
+class PagingStoryAdapter : PagingDataAdapter<StoryResponseRoom, PagingStoryAdapter.ViewHolder>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = ItemRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(view)
@@ -27,8 +28,6 @@ class PagingStoryAdapter : PagingDataAdapter<ListStoryItem, PagingStoryAdapter.V
         }
     }
 
-    override fun getItemCount() = ArrayList<ListStoryItem>().size
-
     class ViewHolder(private val binding: ItemRowBinding) : RecyclerView.ViewHolder(binding.root) {
         fun loadImage(url: String, imageView: ImageView, placeholder: Int) {
             val maxHeight = 535 * imageView.resources.displayMetrics.density
@@ -39,7 +38,7 @@ class PagingStoryAdapter : PagingDataAdapter<ListStoryItem, PagingStoryAdapter.V
                 .error(placeholder)
                 .into(imageView)
         }
-        fun bind(story: ListStoryItem) {
+        fun bind(story: StoryResponseRoom) {
             val name = story.name.replaceFirstChar { it.uppercase() }
             val apiUrlAvatar = "https://ui-avatars.com/api/?name=$name&size=128&background=random"
             binding.apply {
@@ -58,12 +57,12 @@ class PagingStoryAdapter : PagingDataAdapter<ListStoryItem, PagingStoryAdapter.V
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
-            override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponseRoom>() {
+            override fun areItemsTheSame(oldItem: StoryResponseRoom, newItem: StoryResponseRoom): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            override fun areContentsTheSame(oldItem: StoryResponseRoom, newItem: StoryResponseRoom): Boolean {
                 return oldItem.id == newItem.id
             }
         }
