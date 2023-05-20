@@ -29,14 +29,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rvStories.layoutManager = LinearLayoutManager(this)
-        adapter = PagingStoryAdapter()
 
+        recyclerView()
         setupViewModel()
         getStories()
         setupAction()
     }
 
+    private fun recyclerView() {
+        binding.rvStories.layoutManager = LinearLayoutManager(this)
+        binding.rvStories.setHasFixedSize(true)
+        adapter = PagingStoryAdapter()
+    }
     private fun setupViewModel() {
         factory = ViewModelFactory.getInstance(this)
         mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
@@ -62,14 +66,8 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
+        recyclerView()
         getStories()
-    }
-
-    private fun setRecycleView() {
-        val layoutManager = LinearLayoutManager(this@MainActivity)
-        adapter = PagingStoryAdapter()
-        binding.rvStories.layoutManager = layoutManager
-        binding.rvStories.setHasFixedSize(true)
     }
 
     private fun setupAction() {

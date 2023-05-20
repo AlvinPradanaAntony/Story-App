@@ -16,11 +16,8 @@ data class StoryAPIResponse(
 )
 @Parcelize
 data class ListStoryItem(
-    @field:SerializedName("photoUrl")
-    val photoUrl: String,
-
-    @field:SerializedName("createdAt")
-    val createdAt: String,
+    @field:SerializedName("id")
+    val id: String,
 
     @field:SerializedName("name")
     val name: String,
@@ -28,14 +25,17 @@ data class ListStoryItem(
     @field:SerializedName("description")
     val description: String,
 
-    @field:SerializedName("lon")
-    val lon: Double? = null,
+    @field:SerializedName("photoUrl")
+    val photoUrl: String,
 
-    @field:SerializedName("id")
-    val id: String,
+    @field:SerializedName("createdAt")
+    val createdAt: String,
 
     @field:SerializedName("lat")
-    val lat: Double? = null
+    val lat: Double? = null,
+
+    @field:SerializedName("lon")
+    val lon: Double? = null
 ) : Parcelable
 
 data class RegisterResponse(
@@ -90,12 +90,8 @@ data class DetailStoryResponse(
 )
 
 data class Story(
-
-    @field:SerializedName("photoUrl")
-    val photoUrl: String,
-
-    @field:SerializedName("createdAt")
-    val createdAt: String,
+    @field:SerializedName("id")
+    val id: String,
 
     @field:SerializedName("name")
     val name: String,
@@ -103,12 +99,15 @@ data class Story(
     @field:SerializedName("description")
     val description: String,
 
-    @field:SerializedName("lon")
-    val lon: Any,
+    @field:SerializedName("photoUrl")
+    val photoUrl: String,
 
-    @field:SerializedName("id")
-    val id: String,
+    @field:SerializedName("createdAt")
+    val createdAt: String,
 
     @field:SerializedName("lat")
-    val lat: Any
+    val lat: Double? = null,
+
+    @field:SerializedName("lon")
+    val lon: Double? = null
 )

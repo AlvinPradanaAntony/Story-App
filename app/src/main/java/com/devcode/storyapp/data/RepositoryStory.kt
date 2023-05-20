@@ -28,7 +28,6 @@ class RepositoryStory(private val storyDatabase: StoryDatabase,  private val api
             remoteMediator = StoryRemoteMediator(storyDatabase, apiService, pref),
             pagingSourceFactory = {
                 storyDatabase.storyDao().getAllStory()
-                /*StoryPagingSource(apiService, pref)*/
             }
         ).liveData
     }

@@ -50,12 +50,12 @@ class StoryRemoteMediator (private val database: StoryDatabase, private val apiS
             val responseData = apiService.getAllStories("Bearer $token",page, state.config.pageSize)
             val storyEntitiesList = responseData.listStory?.map { StoryResponseRoom(
                 it.id,
-                it.photoUrl,
-                it.createdAt,
                 it.name,
                 it.description,
-                it.lon,
-                it.lat
+                it.photoUrl,
+                it.createdAt,
+                it.lat ,
+                it.lon
             ) } ?: emptyList()
 
             val endOfPaginationReached = storyEntitiesList.isEmpty()
