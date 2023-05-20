@@ -98,7 +98,7 @@
             <com.devcode.storyapp.ui.customView.CustomEditText
                 android:id="@+id/ed_add_description"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_margin="16dp"
                 android:autofillHints=""
                 android:gravity="top"
@@ -115,11 +115,25 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit_as_guest"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textSize="16sp"
                 android:textOff="@string/on"
                 android:textOn="@string/off"
                 app:layout_constraintEnd_toEndOf="@+id/ed_add_description"
                 app:layout_constraintStart_toStartOf="@+id/ed_add_description"
                 app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/mark_your_location"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textOff="@string/on"
+                android:textOn="@string/off"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/switch_user"
+                app:layout_constraintStart_toStartOf="@+id/switch_user"
+                app:layout_constraintTop_toBottomOf="@+id/switch_user" />
 
             <Button
                 android:id="@+id/button_add"

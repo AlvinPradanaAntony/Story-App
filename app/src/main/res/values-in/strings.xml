@@ -71,4 +71,5 @@
     <string name="terrain">Terrain</string>
     <string name="hybrid">Hybrid</string>
     <string name="retry">Retry</string>
+    <string name="mark_your_location">Mark your location</string>
 </resources>

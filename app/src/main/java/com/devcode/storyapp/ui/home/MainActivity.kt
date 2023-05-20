@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AddStoryActivity::class.java))
         }
         binding.swipeRefreshLayout.setOnRefreshListener {
+            recyclerView()
             getStories()
             binding.swipeRefreshLayout.isRefreshing = false
         }
