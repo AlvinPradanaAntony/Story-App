@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.data.RepositoryStory
 import com.devcode.storyapp.di.Injection
 import com.devcode.storyapp.ui.addStory.AddStoryViewModel
-import com.devcode.storyapp.ui.main.MainViewModel
 import com.devcode.storyapp.ui.login.LoginViewModel
+import com.devcode.storyapp.ui.main.MainViewModel
 import com.devcode.storyapp.ui.mapList.MapViewModel
 import com.devcode.storyapp.ui.profile.ProfileViewModel
 import com.devcode.storyapp.ui.register.RegisterViewModel
