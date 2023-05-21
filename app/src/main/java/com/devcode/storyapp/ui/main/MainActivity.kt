@@ -1,9 +1,8 @@
-package com.devcode.storyapp.ui.home
+package com.devcode.storyapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.devcode.storyapp.databinding.ActivityMainBinding
 import com.devcode.storyapp.ui.addStory.AddStoryActivity
 import com.devcode.storyapp.ui.mapList.MapListActivity
 import com.devcode.storyapp.ui.profile.ProfileActivity
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel

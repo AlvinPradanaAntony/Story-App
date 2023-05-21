@@ -17,7 +17,7 @@ import com.devcode.storyapp.R
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivityLoginBinding
 import com.devcode.storyapp.model.UserModel
-import com.devcode.storyapp.ui.home.MainActivity
+import com.devcode.storyapp.ui.main.MainActivity
 import com.devcode.storyapp.ui.register.RegisterActivity
 import com.devcode.storyapp.utils.Result
 import com.google.android.material.snackbar.Snackbar

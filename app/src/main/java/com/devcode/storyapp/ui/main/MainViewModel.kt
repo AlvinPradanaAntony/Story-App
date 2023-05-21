@@ -1,4 +1,4 @@
-package com.devcode.storyapp.ui.home
+package com.devcode.storyapp.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

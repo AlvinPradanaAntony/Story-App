@@ -22,8 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.*
 import com.devcode.storyapp.databinding.ActivityAddStoryBinding
 import com.devcode.storyapp.ui.cameraActivity.CameraActivity
-import com.devcode.storyapp.ui.home.MainActivity
-import com.devcode.storyapp.ui.mapList.MapListActivity
+import com.devcode.storyapp.ui.main.MainActivity
 import com.devcode.storyapp.utils.Result
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices

@@ -23,8 +23,8 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.devcode.storyapp.ViewModelFactory
 import com.devcode.storyapp.databinding.ActivitySplashBinding
-import com.devcode.storyapp.ui.home.MainActivity
-import com.devcode.storyapp.ui.home.MainViewModel
+import com.devcode.storyapp.ui.main.MainActivity
+import com.devcode.storyapp.ui.main.MainViewModel
 import com.devcode.storyapp.ui.login.LoginActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")

@@ -170,49 +170,32 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun getLocationUser() {
         val token = "Bearer $userToken"
         mapViewModel.getStoryLocation(token).observe(this) {
-            when (it) {
-                is Result.Loading -> {}
-                is Result.Success -> {
-                   it.data.listStory?.forEach{ listStoryItem ->
-                       val name = listStoryItem.name
-                       val latLng = LatLng(listStoryItem.lat, listStoryItem.lon)
-                       val addressName = getAddressName(listStoryItem.lat, listStoryItem.lon)
-                       if (addressName != null) {
-                           mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(addressName))
-                           boundsBuilder.include(latLng)
-                       } else {
-                           val unknownAddress = "Alamat tidak ditemukan"
-                           mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(unknownAddress))
-                           boundsBuilder.include(latLng)
-                       }
-                   }
-                }
-                is Result.Error -> {
-                    Snackbar.make(binding.root, "Terjadi kesalahan: ${it.error}", Snackbar.LENGTH_LONG).show()
-                }
-            }
-        }
-       /* mapViewModel.postLocation(userToken)
-        mapViewModel.isLocationUser.observe(this) { data ->
             try {
-                data?.listStory?.forEach { listStoryItem ->
-                    val name = listStoryItem.name
-                    val latLng = LatLng(listStoryItem.lat, listStoryItem.lon)
-                    val addressName = getAddressName(listStoryItem.lat, listStoryItem.lon)
-                    if (addressName != null) {
-                        mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(addressName))
-                        boundsBuilder.include(latLng)
-                    } else {
-                        val unknownAddress = "Alamat tidak ditemukan"
-                        mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(unknownAddress))
-                        boundsBuilder.include(latLng)
+                when (it) {
+                    is Result.Loading -> {}
+                    is Result.Success -> {
+                        it.data.listStory?.forEach{ listStoryItem ->
+                            val name = listStoryItem.name
+                            val latLng = LatLng(listStoryItem.lat, listStoryItem.lon)
+                            val addressName = getAddressName(listStoryItem.lat, listStoryItem.lon)
+                            if (addressName != null) {
+                                mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(addressName))
+                                boundsBuilder.include(latLng)
+                            } else {
+                                val unknownAddress = "Alamat tidak ditemukan"
+                                mMap.addMarker(MarkerOptions().position(latLng).title(name).snippet(unknownAddress))
+                                boundsBuilder.include(latLng)
+                            }
+                        }
+                    }
+                    is Result.Error -> {
+                        Snackbar.make(binding.root, "Terjadi kesalahan: ${it.error}", Snackbar.LENGTH_LONG).show()
                     }
                 }
             } catch (e: Exception) {
-                Snackbar.make(binding.root, "Terjadi kesalahan: $e", Snackbar.LENGTH_LONG).show()
-                Log.e("LocationError", "getLocationUser: $e")
+                Snackbar.make(binding.root, "Terjadi kesalahan saat mendapatkan lokasi", Snackbar.LENGTH_LONG).show()
             }
-        }*/
+        }
     }
 
     private fun getAddressName(lat: Double, lon: Double): String? {
