@@ -31,11 +31,10 @@ import org.mockito.junit.MockitoJUnitRunner
 class MainViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
-
+    private lateinit var mainViewModel: MainViewModel
 
     @Mock
     private lateinit var repositoryStory: RepositoryStory
-    private lateinit var mainViewModel: MainViewModel
     private val dummyStoryList = DataDummy.generateDummyStoryResponse()
 
     @get:Rule
@@ -65,7 +64,7 @@ class MainViewModelTest {
         assertNotNull(differ.snapshot())
         assertEquals(dummyStoryList, differ.snapshot())
         assertEquals(dummyStoryList.size, differ.snapshot().size)
-        assertEquals(dummyStoryList[0].name, differ.snapshot()[0]?.name)
+        assertEquals(dummyStoryList[0], differ.snapshot()[0])
     }
 
     @Test

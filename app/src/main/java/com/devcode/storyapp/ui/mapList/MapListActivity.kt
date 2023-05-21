@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -33,7 +34,6 @@ import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 import java.util.*
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "session")
 class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapListBinding
     private lateinit var binding2: BottomSheetBinding
@@ -66,7 +66,11 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setupView() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.fr_map_list) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        try {
+            mapFragment.getMapAsync(this)
+        } catch (e: Exception) {
+            Log.e("MapListActivity", "setupView: ${e.message}")
+        }
     }
 
     private fun setupAction(){
@@ -115,8 +119,12 @@ class MapListActivity : AppCompatActivity(), OnMapReadyCallback {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
-            if (isGranted) {
-                getMyLocation()
+            try {
+                if (isGranted) {
+                    getMyLocation()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
             }
         }
 
