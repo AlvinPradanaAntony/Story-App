@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.devcode.storyapp'
+    namespace 'com.devcode.storyappfinal'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.devcode.storyapp"
+        applicationId "com.devcode.storyappfinal"
         minSdk 22
         targetSdk 33
         versionCode 1

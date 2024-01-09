@@ -95,7 +95,7 @@
                     style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
 
-            <com.devcode.storyapp.ui.customView.CustomEditText
+            <com.devcode.storyappfinal.ui.customView.CustomEditText
                 android:id="@+id/ed_add_description"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
@@ -135,7 +135,7 @@
                 app:layout_constraintStart_toStartOf="@+id/switch_user"
                 app:layout_constraintTop_toBottomOf="@+id/switch_user" />
 
-            <com.devcode.storyapp.ui.customView.CustomButton
+            <com.devcode.storyappfinal.ui.customView.CustomButton
                 android:id="@+id/button_add"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

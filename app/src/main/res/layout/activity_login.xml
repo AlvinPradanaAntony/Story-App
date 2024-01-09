@@ -91,7 +91,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:contentDescription="@string/abstract_1" />
 
-            <com.devcode.storyapp.ui.customView.CustomEditText
+            <com.devcode.storyappfinal.ui.customView.CustomEditText
                 android:id="@+id/ed_login_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <com.devcode.storyapp.ui.customView.CustomEditText
+            <com.devcode.storyappfinal.ui.customView.CustomEditText
                 android:id="@+id/ed_login_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ed_login_email" />
 
-            <com.devcode.storyapp.ui.customView.CustomButton
+            <com.devcode.storyappfinal.ui.customView.CustomButton
                 android:id="@+id/button_login"
                 android:layout_width="0dp"
                 android:layout_height="56dp"
