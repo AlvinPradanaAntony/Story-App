@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">StoryApp</string>
-    <string name="title_logo">StoryApp</string>
+    <string name="app_name">StoryAppFinal</string>
+    <string name="title_logo">StoryAppFinal</string>
 
     <string name="HeadlineLogin">Hey There !</string>
     <string name="CaptionLogin">It’s time to make ur journey! Let’s get started now.</string>
